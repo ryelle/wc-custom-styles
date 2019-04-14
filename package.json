@@ -1,0 +1,26 @@
+{
+  "name": "custom-block-style-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses --production",
+    "lint:css": "wp-scripts lint-style '**/*.css'",
+    "lint:js": "wp-scripts lint-js .",
+    "lint:php": "composer run phpcs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json .",
+    "start": "wp-scripts start",
+    "test:unit": "wp-scripts test-unit-js"
+  },
+  "author": "Kelly Dwan",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@wordpress/scripts": "^3.1.0"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.9.0"
+  }
+}
