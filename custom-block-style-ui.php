@@ -18,10 +18,10 @@ function cbsui_enqueue_assets() {
 	wp_enqueue_script(
 		'cbsui-script',
 		plugins_url( 'build/index.js', __FILE__ ),
-		array( 'wp-blocks', 'lodash' ),
+		array( 'wp-components', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-plugins', 'lodash' ),
 		CBSUI_VERSION
 	);
-	
+
 	$settings = array(
 		'core/paragraph' => array(
 			array( "name" => "blue", "label" => __( "Blue Paragraph" ) ),
