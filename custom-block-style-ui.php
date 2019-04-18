@@ -6,6 +6,8 @@
  * Author: Kelly Dwan
  * Author URI: https://ryelle.codes
  * Text Domain: custom-block-style-ui
+ *
+ * @package CustomBlockStylesUI
  */
 
 defined( 'ABSPATH' ) || die();
@@ -18,14 +20,21 @@ function cbsui_enqueue_assets() {
 	wp_enqueue_script(
 		'cbsui-script',
 		plugins_url( 'build/index.js', __FILE__ ),
-		array( 'wp-components', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-plugins', 'lodash' ),
-		CBSUI_VERSION
+		array( 'wp-components', 'wp-blocks', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-plugins', 'lodash' ),
+		CBSUI_VERSION,
+		true
 	);
 
 	$settings = array(
-		'core/paragraph' => array(
-			array( "name" => "blue", "label" => __( "Blue Paragraph" ) ),
-			array( "name" => "red", "label" => __( "Red Paragraph" ) ),
+		array(
+			'name'  => 'blue',
+			'label' => __( 'Blue Paragraph', 'custom-block-style-ui' ),
+			'block' => 'core/paragraph',
+		),
+		array(
+			'name'  => 'red',
+			'label' => __( 'Red Paragraph', 'custom-block-style-ui' ),
+			'block' => 'core/paragraph',
 		),
 	);
 

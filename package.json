@@ -9,7 +9,7 @@
     "check-licenses": "wp-scripts check-licenses --production",
     "lint:css": "wp-scripts lint-style '**/*.css'",
     "lint:js": "wp-scripts lint-js .",
-    "lint:php": "composer run phpcs",
+    "lint:php": "composer run phpcs .",
     "lint:pkg-json": "wp-scripts lint-pkg-json .",
     "start": "wp-scripts start",
     "test:unit": "wp-scripts test-unit-js"

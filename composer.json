@@ -10,7 +10,7 @@
       "phpcs --extensions=php -s -p"
     ],
     "phpcbf": [
-      "phpcbf -p"
+      "phpcbf --extensions=php -p"
     ]
   },
   "extra": {
