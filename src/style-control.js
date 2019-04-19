@@ -1,26 +1,29 @@
 /**
  * External Dependencies
  */
-import {  BaseControl, TextControl } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
-import { withInstanceId } from '@wordpress/compose';
+import { __ } from '@wordpress/i18n';
+import { TextControl } from '@wordpress/components';
 
-const StyleControl = ( { instanceId, label, name } ) => {
+/**
+ * Internal dependencies
+ */
+import { getClassFromLabel } from './utils';
+
+const StyleControl = ( { label } ) => {
 	return (
-		<Fragment>
-			<BaseControl.VisualLabel>
-				{ label }
-			</BaseControl.VisualLabel>
+		<fieldset>
+			<legend className="screen-reader-text">{ label }</legend>
 			<TextControl
-				label="Human-readable label"
+				label={ __( 'Style Name', 'custom-block-style-ui' ) }
 				value={ label }
 			/>
 			<TextControl
-				label="CSS class"
-				value={ name }
+				label={ __( 'CSS Class', 'custom-block-style-ui' ) }
+				value={ `is-style-${ getClassFromLabel( label ) }` }
+				readOnly
 			/>
-		</Fragment>
+		</fieldset>
 	);
 }
 
-export default withInstanceId( StyleControl );
+export default StyleControl;
