@@ -2,18 +2,20 @@
  * External Dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { compose } from '@wordpress/compose';
 import { Fragment } from '@wordpress/element';
 import { getBlockTypes, getBlockType } from '@wordpress/blocks';
 import { map } from 'lodash';
-import {  Panel, PanelBody, PanelRow, SelectControl } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, SelectControl } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 
 /**
  * Internal Dependencies
  */
 import StyleControl from './style-control';
+import { getClassFromLabel } from './utils';
 
-const Sidebar = ( { styles = [] } ) => {
+const Sidebar = ( { styles = [], onChange } ) => {
 	const blockTypes = getBlockTypes();
 
 	return (
@@ -27,8 +29,12 @@ const Sidebar = ( { styles = [] } ) => {
 
 				return (
 					<PanelBody title={ title } key={ block }>
-						{ values.map( ( { label, name } ) => (
-							<StyleControl label={ label } key={ `${ block }-${ name }` }/>
+						{ values.map( ( { id, label } ) => (
+							<StyleControl
+								key={ `${ block }-${ id }` }
+								label={ label }
+								id={ id }
+							/>
 						) ) }
 					</PanelBody>
 				);
@@ -46,10 +52,12 @@ const Sidebar = ( { styles = [] } ) => {
 	);
 }
 
-export default withSelect( ( select ) => {
-	const { getStylesByBlockType } = select( 'cbsui' );
+export default compose( [
+	withSelect( ( select ) => {
+		const { getStylesByBlockType } = select( 'cbsui' );
 
-	return {
-		styles: getStylesByBlockType(),
-	};
-} )( Sidebar );
+		return {
+			styles: getStylesByBlockType(),
+		};
+	} ),
+] )( Sidebar );

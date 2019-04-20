@@ -28,11 +28,13 @@ function cbsui_enqueue_assets() {
 	$settings = array(
 		array(
 			'name'  => 'blue',
+			'id'    => 1,
 			'label' => __( 'Blue', 'custom-block-style-ui' ),
 			'block' => 'core/paragraph',
 		),
 		array(
 			'name'  => 'red',
+			'id'    => 2,
 			'label' => __( 'Red', 'custom-block-style-ui' ),
 			'block' => 'core/paragraph',
 		),
