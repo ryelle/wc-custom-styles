@@ -49,7 +49,7 @@ const actions = {
 	},
 };
 
-registerStore( 'cbsui', {
+export default registerStore( 'cbsui', {
 	reducer( state = DEFAULT_STATE, action ) {
 		switch ( action.type ) {
 			case 'UPDATE_STYLE':

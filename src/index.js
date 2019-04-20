@@ -3,13 +3,13 @@
  */
 import { Fragment } from '@wordpress/element';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post';
-import { registerBlockStyle } from '@wordpress/blocks';
+import { registerBlockStyle, unregisterBlockStyle } from '@wordpress/blocks';
 import { registerPlugin } from '@wordpress/plugins';
 
 /*
  * Internal dependencies
  */
-import './store';
+import store from './store';
 import CustomStylesSidebar from './sidebar';
 
 const title = 'Custom Block Styles';
@@ -28,6 +28,21 @@ registerPlugin( 'cbsui-custom-styles', { render: () => (
 	</Fragment>
 ) } );
 
-CustomBlockStyle.forEach( ( { block, ...style } ) => {
-	registerBlockStyle( block, style );
-} );
+let prevStyles = [];
+function updateBlockStyles() {
+	const styles = store.getState();
+	const activeStyles = styles.filter( ( style ) => !! style.name );
+
+	prevStyles.forEach( ( { block, ...style } ) => {
+		unregisterBlockStyle( block, style.name );
+	} );
+
+	activeStyles.forEach( ( { block, ...style } ) => {
+		registerBlockStyle( block, style );
+	} );
+
+	prevStyles = activeStyles;
+}
+
+updateBlockStyles();
+store.subscribe( updateBlockStyles );
