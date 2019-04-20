@@ -34,7 +34,7 @@ const actions = {
 
 	deleteStyle( id ) {
 		return {
-			type: 'UPDATE_STYLE',
+			type: 'DELETE_STYLE',
 			id,
 		};
 	},
