@@ -10,7 +10,7 @@ import { withDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { getClassFromLabel } from './utils';
+import { getClassFromLabel } from '../utils';
 
 const StyleControl = ( { id, label, onChange } ) => {
 	return (

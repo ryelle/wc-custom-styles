@@ -9,7 +9,7 @@ import { registerPlugin } from '@wordpress/plugins';
 /*
  * Internal dependencies
  */
-import '../store';
+import './store';
 import CustomStylesSidebar from './sidebar';
 
 const title = 'Custom Block Styles';
