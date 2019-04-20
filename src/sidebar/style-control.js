@@ -10,9 +10,10 @@ import { withDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { getClassFromLabel } from '../utils';
+import { getClass } from '../utils';
 
-const StyleControl = ( { id, label, onChange, onRemove } ) => {
+const StyleControl = ( { onChange, onRemove, style } ) => {
+	const { id, label } = style;
 	return (
 		<fieldset>
 			<legend className="screen-reader-text">{ label }</legend>
@@ -25,7 +26,7 @@ const StyleControl = ( { id, label, onChange, onRemove } ) => {
 					/>
 					<TextControl
 						label={ __( 'CSS Class', 'custom-block-style-ui' ) }
-						value={ `is-style-${ getClassFromLabel( label ) }` }
+						value={ `is-style-${ getClass( style ) }` }
 						readOnly
 					/>
 				</div>
@@ -48,7 +49,6 @@ export default compose( [
 			onChange( id, value ) {
 				updateStyle( id, {
 					label: value,
-					name: getClassFromLabel( value ),
 				} );
 			},
 			onRemove( id ) {

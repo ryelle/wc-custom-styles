@@ -2,7 +2,16 @@
  * External Dependencies
  */
 import { groupBy, max } from 'lodash';
+
+/**
+ * WordPress Dependencies
+ */
 import { registerStore } from '@wordpress/data';
+
+/**
+ * Internal dependencies
+ */
+import { getClass } from './utils';
 
 /**
  * State structure is an array of "style" objects
@@ -46,7 +55,7 @@ registerStore( 'cbsui', {
 			case 'UPDATE_STYLE':
 				return state.map( ( style ) => {
 					if ( action.id === style.id ) {
-						return { ...style, ...action.style };
+						return { ...style, ...action.style, name: getClass( style ) };
 					}
 					return style;
 				} );

@@ -31,11 +31,10 @@ const Sidebar = ( { styles = [] } ) => {
 
 				return (
 					<PanelBody title={ title } key={ block }>
-						{ values.map( ( { id, label } ) => (
+						{ values.map( ( style ) => (
 							<StyleControl
-								key={ `${ block }-${ id }` }
-								label={ label }
-								id={ id }
+								key={ `${ block }-${ style.id }` }
+								style={ style }
 							/>
 						) ) }
 					</PanelBody>
