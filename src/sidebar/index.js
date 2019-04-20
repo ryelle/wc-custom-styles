@@ -1,23 +1,25 @@
 /**
  * External Dependencies
  */
+import { map } from 'lodash';
+
+/**
+ * WordPress Dependencies
+ */
 import { __ } from '@wordpress/i18n';
+import { PanelBody } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { Fragment } from '@wordpress/element';
-import { getBlockTypes, getBlockType } from '@wordpress/blocks';
-import { map } from 'lodash';
-import { Panel, PanelBody, PanelRow, SelectControl } from '@wordpress/components';
+import { getBlockType } from '@wordpress/blocks';
 import { withSelect } from '@wordpress/data';
 
 /**
  * Internal Dependencies
  */
+import AddStyleControl from './add-style-control';
 import StyleControl from './style-control';
-import { getClassFromLabel } from './utils';
 
-const Sidebar = ( { styles = [], onChange } ) => {
-	const blockTypes = getBlockTypes();
-
+const Sidebar = ( { styles = [] } ) => {
 	return (
 		<Fragment>
 			<PanelBody>
@@ -41,16 +43,11 @@ const Sidebar = ( { styles = [], onChange } ) => {
 			} ) }
 
 			<PanelBody>
-				<PanelRow>
-					<SelectControl
-						label={ __( 'Add a style to block', 'custom-block-style-ui' ) }
-						options={ blockTypes.map( ( block ) => ( { value: block.name, label: block.title } ) ) }
-					/>
-				</PanelRow>
+				<AddStyleControl />
 			</PanelBody>
 		</Fragment>
 	);
-}
+};
 
 export default compose( [
 	withSelect( ( select ) => {

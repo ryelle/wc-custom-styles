@@ -4,5 +4,5 @@
 import { kebabCase } from 'lodash';
 
 export function getClassFromLabel( label ) {
-	return kebabCase( label )
+	return kebabCase( label );
 }

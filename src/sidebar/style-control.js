@@ -28,10 +28,10 @@ const StyleControl = ( { id, label, onChange } ) => {
 			/>
 		</fieldset>
 	);
-}
+};
 
 export default compose( [
-	withDispatch( ( dispatch, ownProps ) => {
+	withDispatch( ( dispatch ) => {
 		const { updateStyle } = dispatch( 'cbsui' );
 
 		return {
@@ -40,7 +40,7 @@ export default compose( [
 					label: value,
 					name: getClassFromLabel( value ),
 				} );
-			}
-		}
-	} )
+			},
+		};
+	} ),
 ] )( StyleControl );

@@ -1,16 +1,15 @@
-/**
- * External Dependencies
+/*
+ * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post';
-import { SelectControl } from '@wordpress/components';
 import { registerBlockStyle } from '@wordpress/blocks';
 import { registerPlugin } from '@wordpress/plugins';
 
-/**
- * Internal Dependencies
+/*
+ * Internal dependencies
  */
-import './store';
+import '../store';
 import CustomStylesSidebar from './sidebar';
 
 const title = 'Custom Block Styles';

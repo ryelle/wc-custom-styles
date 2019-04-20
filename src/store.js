@@ -13,7 +13,7 @@ import { registerStore } from '@wordpress/data';
  */
 const DEFAULT_STATE = CustomBlockStyle;
 
-const latestId = max( DEFAULT_STATE.map( ( style ) => style.id ) );
+let latestId = max( DEFAULT_STATE.map( ( style ) => style.id ) );
 
 const actions = {
 	addStyle( block, style ) {
@@ -32,7 +32,7 @@ const actions = {
 		};
 	},
 
-	deleteStyle( id ){
+	deleteStyle( id ) {
 		return {
 			type: 'UPDATE_STYLE',
 			id,
