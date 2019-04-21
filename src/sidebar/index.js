@@ -16,8 +16,7 @@ import { withSelect } from '@wordpress/data';
 /**
  * Internal Dependencies
  */
-import AddStyleControl from './add-style-control';
-import StyleControl from './style-control';
+import { AddStyleControl, StyleControl } from './controls';
 
 const Sidebar = ( { styles = [] } ) => {
 	return (
