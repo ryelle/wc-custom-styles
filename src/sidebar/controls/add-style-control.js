@@ -7,11 +7,22 @@ import { getBlockTypes } from '@wordpress/blocks';
 import { PanelRow, SelectControl } from '@wordpress/components';
 import { withDispatch } from '@wordpress/data';
 
+const UNSUPPORTED_BLOCKS = [
+	'core/media-text',
+	'core/cover',
+	'core/columns',
+	'core/column',
+	'core/group',
+];
+
 const AddStyleControl = ( { onChange } ) => {
-	const blockTypes = getBlockTypes().filter(
-		// If supported, customClassName is omitted, so we need to check for false explicitly.
-		( { supports = {} } ) => supports.customClassName !== false
-	);
+	const blockTypes = getBlockTypes().filter( ( { name, supports = {} } ) => {
+		return (
+			// If supported, customClassName is omitted, so we need to explicitly check.
+			supports.customClassName !== false &&
+			UNSUPPORTED_BLOCKS.indexOf( name ) < 0
+		);
+	} );
 	blockTypes.unshift( {
 		name: 'none',
 		title: __( 'Select Block Type', 'custom-block-style-ui' ),
