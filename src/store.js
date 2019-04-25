@@ -49,7 +49,7 @@ const actions = {
 	},
 };
 
-export default registerStore( 'cbsui', {
+export default registerStore( 'wc-custom-block-style', {
 	reducer( state = DEFAULT_STATE, action ) {
 		switch ( action.type ) {
 			case 'UPDATE_STYLE':

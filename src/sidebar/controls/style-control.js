@@ -20,12 +20,12 @@ const StyleControl = ( { onChange, onRemove, style } ) => {
 			<PanelRow>
 				<div>
 					<TextControl
-						label={ __( 'Style Name', 'custom-block-style-ui' ) }
+						label={ __( 'Style Name', 'wc-custom-block-styles' ) }
 						value={ label }
 						onChange={ partial( onChange, id ) }
 					/>
 					<TextControl
-						label={ __( 'CSS Class', 'custom-block-style-ui' ) }
+						label={ __( 'CSS Class', 'wc-custom-block-styles' ) }
 						value={ `is-style-${ getClass( style ) }` }
 						readOnly
 					/>
@@ -33,7 +33,7 @@ const StyleControl = ( { onChange, onRemove, style } ) => {
 				<IconButton
 					icon="trash"
 					isDestructive
-					label={ __( 'Remove', 'custom-block-style-ui' ) }
+					label={ __( 'Remove', 'wc-custom-block-styles' ) }
 					onClick={ partial( onRemove, id ) }
 				/>
 			</PanelRow>
@@ -43,7 +43,7 @@ const StyleControl = ( { onChange, onRemove, style } ) => {
 
 export default compose( [
 	withDispatch( ( dispatch ) => {
-		const { deleteStyle, updateStyle } = dispatch( 'cbsui' );
+		const { deleteStyle, updateStyle } = dispatch( 'wc-custom-block-style' );
 
 		return {
 			onChange( id, value ) {

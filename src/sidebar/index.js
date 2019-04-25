@@ -22,7 +22,7 @@ const Sidebar = ( { styles = [] } ) => {
 	return (
 		<Fragment>
 			<PanelBody>
-				<p>{ __( 'Create new block styles which apply custom classes.', 'custom-block-style-ui' ) }</p>
+				<p>{ __( 'Create new block styles which apply custom classes.', 'wc-custom-block-styles' ) }</p>
 			</PanelBody>
 
 			{ map( styles, ( values, block ) => {
@@ -49,7 +49,7 @@ const Sidebar = ( { styles = [] } ) => {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const { getStylesByBlockType } = select( 'cbsui' );
+		const { getStylesByBlockType } = select( 'wc-custom-block-style' );
 
 		return {
 			styles: getStylesByBlockType(),

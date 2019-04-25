@@ -13,7 +13,7 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="custom-block-style-ui" />
+			<property name="text_domain" type="array" value="wc-custom-block-styles" />
 		</properties>
 	</rule>
 

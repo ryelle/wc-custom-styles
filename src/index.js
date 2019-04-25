@@ -1,6 +1,7 @@
 /*
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post';
 import { registerBlockStyle, unregisterBlockStyle } from '@wordpress/blocks';
@@ -12,11 +13,11 @@ import { registerPlugin } from '@wordpress/plugins';
 import store from './store';
 import CustomStylesSidebar from './sidebar';
 
-const title = 'Custom Block Styles';
-const name = 'cbsui/custom-styles';
+const title = __( 'Custom Block Styles', 'wc-custom-block-styles' );
+const name = 'wc-cbs/custom-styles';
 const icon = 'admin-appearance';
 
-registerPlugin( 'cbsui-custom-styles', { render: () => (
+registerPlugin( 'wc-custom-block-styles', { render: () => (
 	<Fragment>
 		<PluginSidebarMoreMenuItem icon={ icon } target={ name }>
 			{ title }

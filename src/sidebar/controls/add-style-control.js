@@ -25,13 +25,13 @@ const AddStyleControl = ( { onChange } ) => {
 	} );
 	blockTypes.unshift( {
 		name: 'none',
-		title: __( 'Select Block Type', 'custom-block-style-ui' ),
+		title: __( 'Select Block Type', 'wc-custom-block-styles' ),
 	} );
 
 	return (
 		<PanelRow>
 			<SelectControl
-				label={ __( 'Add a style to block', 'custom-block-style-ui' ) }
+				label={ __( 'Add a style to block', 'wc-custom-block-styles' ) }
 				value="none"
 				options={ blockTypes.map( ( block ) => ( {
 					value: block.name,
@@ -45,7 +45,7 @@ const AddStyleControl = ( { onChange } ) => {
 
 export default compose( [
 	withDispatch( ( dispatch ) => {
-		const { addStyle } = dispatch( 'cbsui' );
+		const { addStyle } = dispatch( 'wc-custom-block-style' );
 
 		return {
 			onChange( block ) {
