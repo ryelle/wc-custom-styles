@@ -6,7 +6,9 @@ import { debounce } from 'lodash';
 /**
  * WordPress dependencies
  */
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { dispatch } from '@wordpress/data';
 
 function saveSettings( action, { getState } ) {
 	const state = getState();
@@ -14,11 +16,19 @@ function saveSettings( action, { getState } ) {
 		path: '/wc-cbs/v1/settings',
 		data: state,
 		method: 'POST',
-	} ).then(
+	} )
 		/* We don't need to do anything… */
-	).catch( () => {
-		/* We need to handle the error. */
-	} );
+		.then()
+		.catch( ( error ) => {
+			/* We need to handle the error. */
+			const message = sprintf(
+				__( 'Error saving block styles: %s', 'wc-custom-block-styles' ),
+				error.message
+			);
+			dispatch( 'core/notices' ).createNotice( 'warning', message, {
+				isDismissible: true,
+			} );
+		} );
 }
 
 export default {

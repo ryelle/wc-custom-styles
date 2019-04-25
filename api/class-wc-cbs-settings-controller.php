@@ -129,12 +129,12 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	protected function prepare_item_for_database( $request ) {
 		$body = $request->get_body();
 		if ( ! $body ) {
-			return new WP_Error( 'rest_no_data', __( 'No data.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_no_data', __( 'No data was submitted.' ), array( 'status' => 400 ) );
 		}
 
 		$raw_settings = json_decode( $body );
 		if ( ! $raw_settings ) {
-			return new WP_Error( 'rest_invalid_json', __( 'Invalid JSON.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_invalid_json', __( 'The data submitted was malformed.' ), array( 'status' => 400 ) );
 		}
 
 		return rest_sanitize_value_from_schema( $raw_settings, $this->get_item_schema() );
