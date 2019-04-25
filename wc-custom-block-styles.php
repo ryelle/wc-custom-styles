@@ -17,9 +17,9 @@ define( 'WC_CBS_VERSION', '1.0.0' );
  * Intialize REST API endpoint.
  */
 function wc_cbs_rest_api_init() {
-	require_once dirname( __FILE__ ) . '/api/class-wc-cbs-settings-controller.php';
+	require_once dirname( __FILE__ ) . '/api/class-wc-cbs-styles-controller.php';
 
-	$controller = new WC_CBS_Settings_Controller();
+	$controller = new WC_CBS_Styles_Controller();
 	$controller->register_routes();
 }
 add_action( 'rest_api_init', 'wc_cbs_rest_api_init' );

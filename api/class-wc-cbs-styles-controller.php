@@ -1,6 +1,6 @@
 <?php
 /**
- * REST API Settings Controller
+ * REST API Style Settings Controller
  *
  * Handles requests to /wc-cbs/v1/styles
  *
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * @package WC Custom Block Styles
  * @extends WP_REST_Controller
  */
-class WC_CBS_Settings_Controller extends WP_REST_Controller {
+class WC_CBS_Styles_Controller extends WP_REST_Controller {
 
 	/**
 	 * Endpoint namespace.
