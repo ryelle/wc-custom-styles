@@ -31,7 +31,7 @@ const AddStyleControl = ( { onChange } ) => {
 	return (
 		<PanelRow>
 			<SelectControl
-				label={ __( 'Add a style to block', 'wc-custom-block-styles' ) }
+				label={ __( 'Select block to style', 'wc-custom-block-styles' ) }
 				value="none"
 				options={ blockTypes.map( ( block ) => ( {
 					value: block.name,

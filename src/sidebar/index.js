@@ -22,27 +22,35 @@ const Sidebar = ( { styles = [] } ) => {
 	return (
 		<Fragment>
 			<PanelBody>
-				<p>{ __( 'Create new block styles which apply custom classes.', 'wc-custom-block-styles' ) }</p>
+				<p>
+					{ __(
+						'Customize your blocks and colors using these settings. Some note about it being global across all posts/pages.',
+						'wc-custom-block-styles'
+					) }
+				</p>
+			</PanelBody>
+
+			<PanelBody title={ __( 'Add a new style', 'wc-custom-block-styles' ) }>
+				<p>
+					{ __(
+						'Create new block styles which apply custom classes.',
+						'wc-custom-block-styles'
+					) }
+				</p>
+				<AddStyleControl />
 			</PanelBody>
 
 			{ map( styles, ( values, block ) => {
 				const { title } = getBlockType( block );
 
 				return (
-					<PanelBody title={ title } key={ block }>
+					<PanelBody title={ title } key={ block } initialOpen={ false }>
 						{ values.map( ( style ) => (
-							<StyleControl
-								key={ `${ block }-${ style.id }` }
-								style={ style }
-							/>
+							<StyleControl key={ `${ block }-${ style.id }` } style={ style } />
 						) ) }
 					</PanelBody>
 				);
 			} ) }
-
-			<PanelBody>
-				<AddStyleControl />
-			</PanelBody>
 		</Fragment>
 	);
 };
