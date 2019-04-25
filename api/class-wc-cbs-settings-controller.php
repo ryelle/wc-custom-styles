@@ -137,7 +137,7 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 		}
 
 		$raw_settings = json_decode( $body );
-		if ( ! $raw_settings ) {
+		if ( ! is_array( $raw_settings ) ) {
 			return new WP_Error( 'rest_invalid_json', __( 'The data submitted was malformed.' ), array( 'status' => 400 ) );
 		}
 
