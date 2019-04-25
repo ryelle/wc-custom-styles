@@ -36,20 +36,7 @@ function wc_cbs_enqueue_assets() {
 		true
 	);
 
-	$settings = array(
-		array(
-			'name'  => 'blue',
-			'id'    => 1,
-			'label' => __( 'Blue', 'wc-custom-block-styles' ),
-			'block' => 'core/paragraph',
-		),
-		array(
-			'name'  => 'red',
-			'id'    => 2,
-			'label' => __( 'Red', 'wc-custom-block-styles' ),
-			'block' => 'core/paragraph',
-		),
-	);
+	$settings = get_option( 'wc-cbs-styles', array() );
 
 	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', $settings );
 }
