@@ -36,8 +36,8 @@ function wc_cbs_enqueue_assets() {
 		true
 	);
 
-	$settings = get_option( 'wc-cbs-styles', array() );
+	$styles = get_option( 'wc-cbs-styles', array() );
 
-	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', $settings );
+	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', array( 'styles' => $styles ) );
 }
 add_action( 'enqueue_block_editor_assets', 'wc_cbs_enqueue_assets' );
