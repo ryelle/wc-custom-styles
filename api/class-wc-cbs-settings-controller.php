@@ -65,7 +65,20 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		return get_option( 'wc-cbs-styles', array() );
+		return get_option( 'wc-cbs-styles', array(
+			array(
+				'name'  => 'blue',
+				'id'    => 1,
+				'label' => __( 'Blue', 'wc-custom-block-styles' ),
+				'block' => 'core/paragraph',
+			),
+			array(
+				'name'  => 'red',
+				'id'    => 2,
+				'label' => __( 'Red', 'wc-custom-block-styles' ),
+				'block' => 'core/paragraph',
+			),
+		) );
 	}
 
 	/**
