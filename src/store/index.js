@@ -23,7 +23,7 @@ import selectors from './selectors';
  *   style.label - the human-readable name for this style
  *   style.name  - the CSS class added to the block, generated from the label
  */
-const DEFAULT_STATE = CustomBlockStyle;
+const DEFAULT_STATE = Array.isArray( CustomBlockStyle ) ? CustomBlockStyle : [];
 
 let latestId = max( DEFAULT_STATE.map( ( style ) => style.id ) );
 
