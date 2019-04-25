@@ -17,8 +17,8 @@
   "author": "Kelly Dwan",
   "license": "GPL-2.0-or-later",
   "devDependencies": {
-    "@wordpress/eslint-plugin": "^2.1.0",
-    "@wordpress/scripts": "^3.1.0"
+    "@wordpress/eslint-plugin": "2.1.0",
+    "@wordpress/scripts": "3.1.0"
   },
   "engines": {
     "node": "10.15.3",
