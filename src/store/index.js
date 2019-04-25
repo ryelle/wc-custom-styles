@@ -1,7 +1,7 @@
 /**
  * External Dependencies
  */
-import { groupBy, max } from 'lodash';
+import { max } from 'lodash';
 
 /**
  * WordPress Dependencies
@@ -11,8 +11,10 @@ import { registerStore } from '@wordpress/data';
 /**
  * Internal dependencies
  */
+import actions from './actions';
 import applyMiddlewares from './middleware';
 import { getClass } from '../utils';
+import selectors from './selectors';
 
 /**
  * State structure is an array of "style" objects
@@ -54,40 +56,8 @@ const store = registerStore( 'wc-custom-block-style', {
 		return state;
 	},
 
-	actions: {
-		addStyle( block, style ) {
-			return {
-				type: 'ADD_STYLE',
-				block,
-				style,
-			};
-		},
-
-		updateStyle( id, style ) {
-			return {
-				type: 'UPDATE_STYLE',
-				id,
-				style,
-			};
-		},
-
-		deleteStyle( id ) {
-			return {
-				type: 'DELETE_STYLE',
-				id,
-			};
-		},
-	},
-
-	selectors: {
-		getStyles( state ) {
-			return state;
-		},
-
-		getStylesByBlockType( state ) {
-			return groupBy( state, 'block' );
-		},
-	},
+	actions,
+	selectors,
 } );
 applyMiddlewares( store );
 
