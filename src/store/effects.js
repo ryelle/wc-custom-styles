@@ -33,5 +33,6 @@ function saveSettings( action, { getState } ) {
 
 export default {
 	ADD_STYLE: debounce( saveSettings, 250 ),
+	DELETE_STYLE: debounce( saveSettings, 250 ),
 	UPDATE_STYLE: debounce( saveSettings, 250 ),
 };
