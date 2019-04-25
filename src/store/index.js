@@ -11,7 +11,8 @@ import { registerStore } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { getClass } from './utils';
+import applyMiddlewares from './middleware';
+import { getClass } from '../utils';
 
 /**
  * State structure is an array of "style" objects
@@ -88,5 +89,6 @@ const store = registerStore( 'wc-custom-block-style', {
 		},
 	},
 } );
+applyMiddlewares( store );
 
 export default store;
