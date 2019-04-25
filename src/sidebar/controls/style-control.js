@@ -13,7 +13,7 @@ import { withDispatch } from '@wordpress/data';
 import { getClass } from '../../utils';
 
 const StyleControl = ( { onChange, onRemove, style } ) => {
-	const { id, label } = style;
+	const { id, label, block } = style;
 	return (
 		<fieldset>
 			<legend className="screen-reader-text">{ label }</legend>
@@ -22,7 +22,7 @@ const StyleControl = ( { onChange, onRemove, style } ) => {
 					<TextControl
 						label={ __( 'Style Name', 'wc-custom-block-styles' ) }
 						value={ label }
-						onChange={ partial( onChange, id ) }
+						onChange={ partial( onChange, id, block ) }
 					/>
 					<TextControl
 						label={ __( 'CSS Class', 'wc-custom-block-styles' ) }
@@ -46,8 +46,9 @@ export default compose( [
 		const { deleteStyle, updateStyle } = dispatch( 'wc-custom-block-style' );
 
 		return {
-			onChange( id, value ) {
+			onChange( id, block, value ) {
 				updateStyle( id, {
+					block,
 					label: value,
 				} );
 			},

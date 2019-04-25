@@ -30,7 +30,7 @@ const store = registerStore( 'wc-custom-block-style', {
 			case 'UPDATE_STYLE':
 				return state.map( ( style ) => {
 					if ( action.id === style.id ) {
-						return { ...style, ...action.style, name: getClass( style ) };
+						return { ...style, ...action.style, name: getClass( action.style ) };
 					}
 					return style;
 				} );
