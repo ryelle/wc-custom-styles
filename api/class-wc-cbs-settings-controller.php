@@ -59,8 +59,7 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	 * @return WP_Error|bool True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// @todo Real security 😬
-		return true || current_user_can( 'edit_posts' );
+		return current_user_can( 'edit_posts' );
 	}
 
 	/**
@@ -70,8 +69,7 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	 * @return WP_Error|bool True if the request has access to update the item, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		// @todo Real security 😬
-		return true || current_user_can( 'edit_posts' );
+		return current_user_can( 'edit_posts' );
 	}
 
 	/**
