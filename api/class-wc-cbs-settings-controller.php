@@ -65,20 +65,20 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		return get_option( 'wc-cbs-styles', array(
-			array(
-				'name'  => 'blue',
-				'id'    => 1,
-				'label' => __( 'Blue', 'wc-custom-block-styles' ),
-				'block' => 'core/paragraph',
-			),
-			array(
-				'name'  => 'red',
-				'id'    => 2,
-				'label' => __( 'Red', 'wc-custom-block-styles' ),
-				'block' => 'core/paragraph',
-			),
-		) );
+		$settings = get_option( 'wc-cbs-styles', array() );
+		$response = $this->prepare_item_for_response( $settings, $request );
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Prepares the settings for the REST response.
+	 *
+	 * @param array           $settings WordPress representation of the settings.
+	 * @param WP_REST_Request $request  Request object.
+	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
+	 */
+	public function prepare_item_for_response( $settings, $request ) {
+		return rest_sanitize_value_from_schema( $settings, $this->get_item_schema() );
 	}
 
 	/**
