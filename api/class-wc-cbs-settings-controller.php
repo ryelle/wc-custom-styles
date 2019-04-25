@@ -2,7 +2,7 @@
 /**
  * REST API Settings Controller
  *
- * Handles requests to /wc-cbs/v1/settings
+ * Handles requests to /wc-cbs/v1/styles
  *
  * @package WC Custom Block Styles
  */
@@ -29,7 +29,7 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/settings';
+	protected $rest_base = 'styles';
 
 	/**
 	 * Registers the routes for the objects of the controller.

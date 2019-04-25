@@ -13,7 +13,7 @@ import { dispatch } from '@wordpress/data';
 function saveSettings( action, { getState } ) {
 	const state = getState();
 	apiFetch( {
-		path: '/wc-cbs/v1/settings',
+		path: '/wc-cbs/v1/styles',
 		data: state,
 		method: 'POST',
 	} )
