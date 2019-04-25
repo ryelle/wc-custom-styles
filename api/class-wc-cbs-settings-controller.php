@@ -67,4 +67,40 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	public function get_items( $request ) {
 		return get_option( 'wc-cbs-styles', array() );
 	}
+
+	/**
+	 * Get the settings schema, conforming to JSON Schema
+	 *
+	 * @return array
+	 */
+	public function get_item_schema() {
+		$schema = array(
+			'$schema' => 'http://json-schema.org/draft-04/schema#',
+			'title'   => 'wc_cbs_settings',
+			'type'    => 'array',
+			'items'   => array(
+				'type'       => 'object',
+				'context'    => array( 'view' ),
+				'properties' => array(
+					'id' => array(
+						'type'        => 'string',
+						'description' => __( 'A numeric ID unique to the style.', 'wc-custom-block-styles' ),
+					),
+					'label' => array(
+						'type'        => 'string',
+						'description' => __( 'The human-readable name for this style.', 'wc-custom-block-styles' ),
+					),
+					'name' => array(
+						'type'        => 'string',
+						'description' => __( 'The CSS class added to the block, generated from the label.', 'wc-custom-block-styles' ),
+					),
+					'block' => array(
+						'type'        => 'string',
+						'description' => __( 'The block name which should use this style.', 'wc-custom-block-styles' ),
+					),
+				),
+			),
+		);
+		return $this->add_additional_fields_schema( $schema );
+	}
 }
