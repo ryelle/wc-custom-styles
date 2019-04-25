@@ -94,6 +94,10 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 		$current_settings = get_option( 'wc-cbs-styles', array() );
 		$settings = $this->prepare_item_for_database( $request );
 
+		if ( is_wp_error( $settings ) ) {
+			return rest_ensure_response( $settings );
+		}
+
 		if ( $current_settings !== $settings ) {
 			$result = update_option( 'wc-cbs-styles', $settings, false );
 
