@@ -38,7 +38,7 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
 			// Here we register the readable endpoint for collections.
 			array(
-				'methods'   => 'GET',
+				'methods'   => WP_REST_Server::READABLE,
 				'callback'  => array( $this, 'get_items' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 			),
