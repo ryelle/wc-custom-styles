@@ -7,16 +7,27 @@
  * Author URI: https://ryelle.codes
  * Text Domain: wc-custom-block-styles
  *
- * @package WCCustomBlockStyles
+ * @package WC Custom Block Styles
  */
 
 defined( 'ABSPATH' ) || die();
 define( 'WC_CBS_VERSION', '1.0.0' );
 
 /**
- * Enqueue assets
+ * Intialize REST API endpoint.
  */
-function wc_cbsenqueue_assets() {
+function wc_cbs_rest_api_init() {
+	require_once dirname( __FILE__ ) . '/api/class-wc-cbs-styles-controller.php';
+
+	$controller = new WC_CBS_Styles_Controller();
+	$controller->register_routes();
+}
+add_action( 'rest_api_init', 'wc_cbs_rest_api_init' );
+
+/**
+ * Enqueue assets.
+ */
+function wc_cbs_enqueue_assets() {
 	wp_enqueue_script(
 		'wc-cbs-script',
 		plugins_url( 'build/index.js', __FILE__ ),
@@ -25,21 +36,8 @@ function wc_cbsenqueue_assets() {
 		true
 	);
 
-	$settings = array(
-		array(
-			'name'  => 'blue',
-			'id'    => 1,
-			'label' => __( 'Blue', 'wc-custom-block-styles' ),
-			'block' => 'core/paragraph',
-		),
-		array(
-			'name'  => 'red',
-			'id'    => 2,
-			'label' => __( 'Red', 'wc-custom-block-styles' ),
-			'block' => 'core/paragraph',
-		),
-	);
+	$settings = get_option( 'wc-cbs-styles', array() );
 
 	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', $settings );
 }
-add_action( 'enqueue_block_editor_assets', 'wc_cbsenqueue_assets' );
+add_action( 'enqueue_block_editor_assets', 'wc_cbs_enqueue_assets' );

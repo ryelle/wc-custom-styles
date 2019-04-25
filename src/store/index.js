@@ -1,7 +1,7 @@
 /**
  * External Dependencies
  */
-import { groupBy, max } from 'lodash';
+import { max } from 'lodash';
 
 /**
  * WordPress Dependencies
@@ -11,7 +11,10 @@ import { registerStore } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { getClass } from './utils';
+import actions from './actions';
+import applyMiddlewares from './middleware';
+import { getClass } from '../utils';
+import selectors from './selectors';
 
 /**
  * State structure is an array of "style" objects
@@ -20,42 +23,17 @@ import { getClass } from './utils';
  *   style.label - the human-readable name for this style
  *   style.name  - the CSS class added to the block, generated from the label
  */
-const DEFAULT_STATE = CustomBlockStyle;
+const DEFAULT_STATE = Array.isArray( CustomBlockStyle ) ? CustomBlockStyle : [];
 
 let latestId = max( DEFAULT_STATE.map( ( style ) => style.id ) );
 
-const actions = {
-	addStyle( block, style ) {
-		return {
-			type: 'ADD_STYLE',
-			block,
-			style,
-		};
-	},
-
-	updateStyle( id, style ) {
-		return {
-			type: 'UPDATE_STYLE',
-			id,
-			style,
-		};
-	},
-
-	deleteStyle( id ) {
-		return {
-			type: 'DELETE_STYLE',
-			id,
-		};
-	},
-};
-
-export default registerStore( 'wc-custom-block-style', {
+const store = registerStore( 'wc-custom-block-style', {
 	reducer( state = DEFAULT_STATE, action ) {
 		switch ( action.type ) {
 			case 'UPDATE_STYLE':
 				return state.map( ( style ) => {
 					if ( action.id === style.id ) {
-						return { ...style, ...action.style, name: getClass( style ) };
+						return { ...style, ...action.style, name: getClass( action.style ) };
 					}
 					return style;
 				} );
@@ -79,14 +57,8 @@ export default registerStore( 'wc-custom-block-style', {
 	},
 
 	actions,
-
-	selectors: {
-		getStyles( state ) {
-			return state;
-		},
-
-		getStylesByBlockType( state ) {
-			return groupBy( state, 'block' );
-		},
-	},
+	selectors,
 } );
+applyMiddlewares( store );
+
+export default store;
