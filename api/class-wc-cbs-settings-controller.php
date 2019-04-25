@@ -96,20 +96,32 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 				'context'    => array( 'view' ),
 				'properties' => array(
 					'id' => array(
-						'type'        => 'string',
+						'type'        => 'integer',
 						'description' => __( 'A numeric ID unique to the style.', 'wc-custom-block-styles' ),
+						'arg_options' => array(
+							'required' => true,
+						),
 					),
 					'label' => array(
 						'type'        => 'string',
 						'description' => __( 'The human-readable name for this style.', 'wc-custom-block-styles' ),
+						'arg_options' => array(
+							'required' => true,
+						),
 					),
 					'name' => array(
 						'type'        => 'string',
-						'description' => __( 'The CSS class added to the block, generated from the label.', 'wc-custom-block-styles' ),
+						'description' => __( 'The CSS class added to the block.', 'wc-custom-block-styles' ),
+						'arg_options' => array(
+							'required' => true,
+						),
 					),
 					'block' => array(
 						'type'        => 'string',
 						'description' => __( 'The block name which should use this style.', 'wc-custom-block-styles' ),
+						'arg_options' => array(
+							'required' => true,
+						),
 					),
 				),
 			),
