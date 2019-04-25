@@ -24,32 +24,7 @@ const DEFAULT_STATE = CustomBlockStyle;
 
 let latestId = max( DEFAULT_STATE.map( ( style ) => style.id ) );
 
-const actions = {
-	addStyle( block, style ) {
-		return {
-			type: 'ADD_STYLE',
-			block,
-			style,
-		};
-	},
-
-	updateStyle( id, style ) {
-		return {
-			type: 'UPDATE_STYLE',
-			id,
-			style,
-		};
-	},
-
-	deleteStyle( id ) {
-		return {
-			type: 'DELETE_STYLE',
-			id,
-		};
-	},
-};
-
-export default registerStore( 'wc-custom-block-style', {
+const store = registerStore( 'wc-custom-block-style', {
 	reducer( state = DEFAULT_STATE, action ) {
 		switch ( action.type ) {
 			case 'UPDATE_STYLE':
@@ -78,7 +53,30 @@ export default registerStore( 'wc-custom-block-style', {
 		return state;
 	},
 
-	actions,
+	actions: {
+		addStyle( block, style ) {
+			return {
+				type: 'ADD_STYLE',
+				block,
+				style,
+			};
+		},
+
+		updateStyle( id, style ) {
+			return {
+				type: 'UPDATE_STYLE',
+				id,
+				style,
+			};
+		},
+
+		deleteStyle( id ) {
+			return {
+				type: 'DELETE_STYLE',
+				id,
+			};
+		},
+	},
 
 	selectors: {
 		getStyles( state ) {
@@ -90,3 +88,5 @@ export default registerStore( 'wc-custom-block-style', {
 		},
 	},
 } );
+
+export default store;
