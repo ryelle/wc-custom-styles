@@ -42,6 +42,11 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 				'callback'  => array( $this, 'get_items' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 			),
+			array(
+				'methods'   => WP_REST_Server::EDITABLE,
+				'callback'  => array( $this, 'update_item' ),
+				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+			),
 			// Register our schema callback.
 			'schema' => array( $this, 'get_item_schema' ),
 		) );
@@ -59,6 +64,17 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Checks if a given request has access to update the settings.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|bool True if the request has access to update the item, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		// @todo Real security 😬
+		return true || current_user_can( 'edit_posts' );
+	}
+
+	/**
 	 * Retrieves a collection of items.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
@@ -71,6 +87,31 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Updates the settings.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
+	 */
+	public function update_item( $request ) {
+		$current_settings = get_option( 'wc-cbs-styles', array() );
+		$settings = $this->prepare_item_for_database( $request );
+
+		if ( $current_settings !== $settings ) {
+			$result = update_option( 'wc-cbs-styles', $settings, false );
+
+			if ( ! $result ) {
+				return new WP_Error(
+					'rest_invalid_option',
+					sprintf( __( 'Unable to save settings.', 'wc-custom-block-styles' ) ),
+					array( 'status' => 500 )
+				);
+			}
+		}
+
+		return rest_ensure_response( $settings );
+	}
+
+	/**
 	 * Prepares the settings for the REST response.
 	 *
 	 * @param array           $settings WordPress representation of the settings.
@@ -79,6 +120,26 @@ class WC_CBS_Settings_Controller extends WP_REST_Controller {
 	 */
 	public function prepare_item_for_response( $settings, $request ) {
 		return rest_sanitize_value_from_schema( $settings, $this->get_item_schema() );
+	}
+
+	/**
+	 * Prepares settings for saving into option.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_Error|object The prepared item, or WP_Error object on failure.
+	 */
+	protected function prepare_item_for_database( $request ) {
+		$body = $request->get_body();
+		if ( ! $body ) {
+			return new WP_Error( 'rest_no_data', __( 'No data.' ), array( 'status' => 400 ) );
+		}
+
+		$raw_settings = json_decode( $body );
+		if ( ! $raw_settings ) {
+			return new WP_Error( 'rest_invalid_json', __( 'Invalid JSON.' ), array( 'status' => 400 ) );
+		}
+
+		return rest_sanitize_value_from_schema( $raw_settings, $this->get_item_schema() );
 	}
 
 	/**
