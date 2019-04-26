@@ -7,16 +7,16 @@ import { map } from 'lodash';
  * WordPress Dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { compose } from '@wordpress/compose';
 import { PanelBody } from '@wordpress/components';
+import { withSelect } from '@wordpress/data';
 
 /**
  * Internal Dependencies
  */
 import ColorControl from './controls/color-control';
 
-const DEFAULT_COLORS = Array.isArray( CustomBlockStyle.colors ) ? CustomBlockStyle.colors : [];
-
-const ColorsPanel = ( { colors = DEFAULT_COLORS } ) => {
+const ColorsPanel = ( { colors } ) => {
 	return (
 		<PanelBody title={ __( 'Custom Colors', 'wc-custom-block-styles' ) }>
 			{ map( colors, ( { color, name } ) => {
@@ -26,4 +26,12 @@ const ColorsPanel = ( { colors = DEFAULT_COLORS } ) => {
 	);
 };
 
-export default ColorsPanel;
+export default compose( [
+	withSelect( ( select ) => {
+		const { getColors } = select( 'wc-custom-block-style' );
+
+		return {
+			colors: getColors(),
+		};
+	} ),
+] )( ColorsPanel );

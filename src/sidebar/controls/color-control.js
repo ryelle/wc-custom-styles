@@ -1,15 +1,21 @@
 /**
+ * External Dependencies
+ */
+import { partial } from 'lodash';
+
+/**
  * WordPress Dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 import {
-	Button,
 	ColorPicker,
 	Dropdown,
 	IconButton,
 	PanelRow,
 	TextControl,
 } from '@wordpress/components';
+import { compose } from '@wordpress/compose';
+import { withDispatch } from '@wordpress/data';
 
 const style = {
 	width: '32px',
@@ -18,7 +24,7 @@ const style = {
 	backgroundColor: 'currentColor',
 };
 
-const ColorControl = ( { color, name } ) => (
+const ColorControl = ( { color, name, onChangeColor, onChangeLabel, onDelete } ) => (
 	<PanelRow key={ color }>
 		<Dropdown
 			renderToggle={ ( { isOpen, onToggle } ) => (
@@ -36,7 +42,7 @@ const ColorControl = ( { color, name } ) => (
 			renderContent={ () => (
 				<ColorPicker
 					color={ color }
-					onChangeComplete={ ( c ) => console.log( c.hex ) }
+					onChangeComplete={ partial( onChangeColor, color ) }
 					disableAlpha
 				/>
 			) }
@@ -49,16 +55,30 @@ const ColorControl = ( { color, name } ) => (
 					// translators: %s: color hex code e.g: "#f00".
 					sprintf( __( 'Color code: %s', 'wc-custom-block-styles' ), color )
 				}
-				onChange={ () => {} }
+				onChange={ partial( onChangeLabel, color ) }
 			/>
 		</div>
 		<IconButton
 			icon="trash"
 			isDestructive
 			label={ __( 'Remove', 'wc-custom-block-styles' ) }
-			onClick={ () => {} }
+			onClick={ partial( onDelete, color ) }
 		/>
 	</PanelRow>
 );
 
-export default ColorControl;
+export default compose( [
+	withDispatch( ( dispatch ) => {
+		const { deleteColor, updateColor } = dispatch( 'wc-custom-block-style' );
+
+		return {
+			onChangeLabel( hex, name ) {
+				updateColor( hex, { name } );
+			},
+			onChangeColor( hex, { hex: color } ) {
+				updateColor( hex, { color } );
+			},
+			onDelete: deleteColor,
+		};
+	} ),
+] )( ColorControl );

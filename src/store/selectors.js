@@ -4,6 +4,10 @@
 import { groupBy } from 'lodash';
 
 export default {
+	getColors( state = {} ) {
+		return state.colors;
+	},
+
 	getStyles( state = {} ) {
 		return state.styles;
 	},
