@@ -10,11 +10,11 @@ import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { dispatch } from '@wordpress/data';
 
-function saveSettings( action, { getState } ) {
-	const state = getState();
+function saveStyles( action, { getState } ) {
+	const { styles } = getState();
 	apiFetch( {
 		path: '/wc-cbs/v1/styles',
-		data: state,
+		data: styles,
 		method: 'POST',
 	} )
 		/* We don't need to do anything… */
@@ -32,7 +32,7 @@ function saveSettings( action, { getState } ) {
 }
 
 export default {
-	ADD_STYLE: debounce( saveSettings, 250 ),
-	DELETE_STYLE: debounce( saveSettings, 250 ),
-	UPDATE_STYLE: debounce( saveSettings, 250 ),
+	ADD_STYLE: debounce( saveStyles, 250 ),
+	DELETE_STYLE: debounce( saveStyles, 250 ),
+	UPDATE_STYLE: debounce( saveStyles, 250 ),
 };

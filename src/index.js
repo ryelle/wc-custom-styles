@@ -31,7 +31,7 @@ registerPlugin( 'wc-custom-block-styles', { render: () => (
 
 let prevStyles = [];
 function updateBlockStyles() {
-	const styles = store.getState();
+	const { styles } = store.getState();
 	const activeStyles = styles.filter( ( style ) => !! style.name );
 
 	prevStyles.forEach( ( { block, ...style } ) => {
