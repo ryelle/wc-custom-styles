@@ -64,7 +64,6 @@ const styleReducer = ( state = DEFAULT_STYLES, action ) => {
 const DEFAULT_COLORS = Array.isArray( CustomBlockStyle.colors ) ? CustomBlockStyle.colors : [];
 
 const colorReducer = ( state = DEFAULT_COLORS, action ) => {
-	console.log( state, action );
 	switch ( action.type ) {
 		case 'UPDATE_COLOR':
 			return state.map( ( color ) => {
