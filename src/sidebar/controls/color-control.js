@@ -8,8 +8,6 @@ import { partial } from 'lodash';
  */
 import { __, sprintf } from '@wordpress/i18n';
 import {
-	ColorPicker,
-	Dropdown,
 	IconButton,
 	PanelRow,
 	TextControl,
@@ -17,36 +15,14 @@ import {
 import { compose } from '@wordpress/compose';
 import { withDispatch } from '@wordpress/data';
 
-const style = {
-	width: '32px',
-	height: '32px',
-	borderRadius: '50%',
-	backgroundColor: 'currentColor',
-};
+/**
+ * Internal Dependencies
+ */
+import ColorPickerButton from './color-picker-button';
 
 const ColorControl = ( { color, name, onChangeColor, onChangeLabel, onDelete } ) => (
-	<PanelRow key={ color }>
-		<Dropdown
-			renderToggle={ ( { isOpen, onToggle } ) => (
-				<IconButton
-					aria-expanded={ isOpen }
-					onClick={ onToggle }
-					aria-label={ __(
-						'Custom color picker',
-						'wc-custom-block-styles'
-					) }
-					icon={ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle r="5" cy="5" cx="5" /></svg> }
-					style={ { ...style, color } }
-				/>
-			) }
-			renderContent={ () => (
-				<ColorPicker
-					color={ color }
-					onChangeComplete={ partial( onChangeColor, color ) }
-					disableAlpha
-				/>
-			) }
-		/>
+	<PanelRow>
+		<ColorPickerButton color={ color } onChangeColor={ onChangeColor } />
 		<div style={ { paddingLeft: '8px' } }>
 			<TextControl
 				label={ __( 'Color Name', 'wc-custom-block-styles' ) }

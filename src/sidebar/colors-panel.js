@@ -14,7 +14,7 @@ import { withSelect } from '@wordpress/data';
 /**
  * Internal Dependencies
  */
-import ColorControl from './controls/color-control';
+import { ColorControl } from './controls';
 
 const ColorsPanel = ( { colors } ) => {
 	return (
