@@ -19,8 +19,8 @@ import { ColorControl } from './controls';
 const ColorsPanel = ( { colors } ) => {
 	return (
 		<PanelBody title={ __( 'Custom Colors', 'wc-custom-block-styles' ) }>
-			{ map( colors, ( { color, name } ) => {
-				return <ColorControl key={ color } color={ color } name={ name } />;
+			{ map( colors, ( { color, name }, i ) => {
+				return <ColorControl key={ i } color={ color } name={ name } />;
 			} ) }
 		</PanelBody>
 	);
