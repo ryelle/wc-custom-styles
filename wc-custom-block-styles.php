@@ -66,3 +66,19 @@ function wc_cbs_enqueue_assets() {
 	) );
 }
 add_action( 'enqueue_block_editor_assets', 'wc_cbs_enqueue_assets' );
+
+/**
+ * Replace the editor colors with the customized settings.
+ *
+ * @param array $editor_settings Default editor settings.
+ * @return array Filtered settings
+ */
+function wc_cbs_replace_editor_colors( $editor_settings ) {
+	$color_palette = get_option( 'wc-cbs-colors', array() );
+	if ( count( $color_palette ) ) {
+		$editor_settings['colors'] = $color_palette;
+	}
+
+	return $editor_settings;
+}
+add_filter( 'block_editor_settings', 'wc_cbs_replace_editor_colors' );
