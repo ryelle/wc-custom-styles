@@ -1,4 +1,14 @@
 /**
+ * External Dependencies
+ */
+import { sample } from 'lodash';
+
+/**
+ * Internal dependencies
+ */
+import colors from '../../data/colors';
+
+/**
  * State structure is an array of "color" objects
  *   color.name - The human-readable name for this color
  *   color.slug - Used as part of the class name, `has-{slug}-background-color`, `has-{slug}-color`.
@@ -22,11 +32,7 @@ export default function( state = DEFAULT_COLORS, action ) {
 		case 'ADD_COLOR':
 			return [
 				...state,
-				{
-					name: '',
-					slug: '',
-					color: '', // @todo Random hex?
-				},
+				sample( colors ),
 			];
 	}
 
