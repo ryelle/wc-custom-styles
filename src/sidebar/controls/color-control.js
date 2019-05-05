@@ -1,7 +1,7 @@
 /**
  * External Dependencies
  */
-import { partial } from 'lodash';
+import { kebabCase, partial } from 'lodash';
 
 /**
  * WordPress Dependencies
@@ -45,7 +45,8 @@ export default compose( [
 
 		return {
 			onChangeLabel( hex, name ) {
-				updateColor( hex, { name } );
+				const slug = kebabCase( name );
+				updateColor( hex, { name, slug } );
 			},
 			onChangeColor( hex, { hex: color } ) {
 				updateColor( hex, { color } );
