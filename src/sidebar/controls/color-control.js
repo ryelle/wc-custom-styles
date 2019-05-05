@@ -6,7 +6,7 @@ import { partial } from 'lodash';
 /**
  * WordPress Dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import {
 	IconButton,
 	PanelRow,
@@ -26,11 +26,7 @@ const ColorControl = ( { color, name, onChangeColor, onChangeLabel, onDelete } )
 		<div style={ { paddingLeft: '8px' } }>
 			<TextControl
 				label={ __( 'Color Name', 'wc-custom-block-styles' ) }
-				value={
-					name ||
-					// translators: %s: color hex code e.g: "#f00".
-					sprintf( __( 'Color code: %s', 'wc-custom-block-styles' ), color )
-				}
+				value={ name }
 				onChange={ partial( onChangeLabel, color ) }
 			/>
 		</div>
