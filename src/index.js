@@ -1,4 +1,9 @@
 /*
+ * External dependencies
+ */
+import { isEqual } from 'lodash';
+
+/*
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -33,6 +38,10 @@ let prevStyles = [];
 function updateBlockStyles() {
 	const { styles } = store.getState();
 	const activeStyles = styles.filter( ( style ) => !! style.name );
+
+	if ( isEqual( prevStyles, activeStyles ) ) {
+		return;
+	}
 
 	prevStyles.forEach( ( { block, ...style } ) => {
 		unregisterBlockStyle( block, style.name );
