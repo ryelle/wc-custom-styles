@@ -37,28 +37,7 @@ function wc_cbs_enqueue_assets() {
 	);
 
 	$styles = get_option( 'wc-cbs-styles', array() );
-	$colors = get_option( 'wc-cbs-colors', array(
-		array(
-			'name' => __( 'strong magenta', 'wc-custom-block-styles' ),
-			'slug' => 'strong-magenta',
-			'color' => '#a156b4',
-		),
-		array(
-			'name' => __( 'light grayish magenta', 'wc-custom-block-styles' ),
-			'slug' => 'light-grayish-magenta',
-			'color' => '#d0a5db',
-		),
-		array(
-			'name' => __( 'very light gray', 'wc-custom-block-styles' ),
-			'slug' => 'very-light-gray',
-			'color' => '#eee',
-		),
-		array(
-			'name' => __( 'very dark gray', 'wc-custom-block-styles' ),
-			'slug' => 'very-dark-gray',
-			'color' => '#444',
-		),
-	) );
+	$colors = get_option( 'wc-cbs-colors', array() );
 
 	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', array(
 		'styles' => $styles,
