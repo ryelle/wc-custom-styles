@@ -17,10 +17,18 @@ define( 'WC_CBS_VERSION', '1.0.0' );
  * Intialize REST API endpoint.
  */
 function wc_cbs_rest_api_init() {
+	require_once dirname( __FILE__ ) . '/api/abstract/class-wc-cbs-option-controller.php';
 	require_once dirname( __FILE__ ) . '/api/class-wc-cbs-styles-controller.php';
+	require_once dirname( __FILE__ ) . '/api/class-wc-cbs-colors-controller.php';
 
-	$controller = new WC_CBS_Styles_Controller();
-	$controller->register_routes();
+	$controllers = array(
+		new WC_CBS_Styles_Controller(),
+		new WC_CBS_Colors_Controller(),
+	);
+
+	foreach ( $controllers as $controller ) {
+		$controller->register_routes();
+	}
 }
 add_action( 'rest_api_init', 'wc_cbs_rest_api_init' );
 
