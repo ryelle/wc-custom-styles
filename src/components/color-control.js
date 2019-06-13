@@ -14,22 +14,19 @@ import { IconButton, PanelRow, TextControl } from '@wordpress/components';
  */
 import ColorPickerButton from './color-picker-button';
 
-const identity = ( e ) => e;
-
 const ColorControl = ( {
 	color,
 	name,
-	onChangeColor = identity,
-	onChangeLabel = identity,
-	onDelete = identity,
+	onChange,
+	onDelete,
 } ) => (
 	<PanelRow>
-		<ColorPickerButton color={ color } onChangeColor={ onChangeColor } />
+		<ColorPickerButton color={ color } onChangeColor={ onChange } />
 		<div style={ { paddingLeft: '8px' } }>
 			<TextControl
 				label={ __( 'Color Name', 'wc-custom-block-styles' ) }
 				value={ name }
-				onChange={ partial( onChangeLabel, color ) }
+				onChange={ ( value ) => onChange( color, { name: value } ) }
 			/>
 		</div>
 		<IconButton
