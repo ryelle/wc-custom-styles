@@ -7,7 +7,7 @@ import { map, sample } from 'lodash';
  * WordPress Dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
+import { Button, Panel, PanelBody } from '@wordpress/components';
 import { Component } from '@wordpress/element';
 
 /**
@@ -57,25 +57,28 @@ class ColorsPanel extends Component {
 		const { colors } = this.state;
 
 		return (
-			<div>
-				<h3>{ __( 'Custom Colors', 'wc-custom-block-styles' ) }</h3>
-				{ map( colors, ( { color, name }, i ) => {
-					return (
-						<ColorControl
-							key={ i }
-							color={ color }
-							name={ name }
-							onChange={ this.onChange }
-							onDelete={ this.onDelete }
-						/>
-					);
-				} ) }
-				<div>
-					<Button onClick={ this.onAddClick } isDefault>
-						{ __( 'Add Color', 'wc-custom-block-styles' ) }
-					</Button>
-				</div>
-			</div>
+			<Panel header={ __( 'Custom Colors', 'wc-custom-block-styles' ) }>
+				<PanelBody initialOpen={ true }>
+					{ map( colors, ( { color, name }, i ) => {
+						return (
+							<ColorControl
+								key={ i }
+								color={ color }
+								name={ name }
+								onChange={ this.onChange }
+								onDelete={ this.onDelete }
+							/>
+						);
+					} ) }
+				</PanelBody>
+				<PanelBody initialOpen={ true }>
+					<div className="wc-cbs__button-add">
+						<Button onClick={ this.onAddClick } isDefault>
+							{ __( 'Add Color', 'wc-custom-block-styles' ) }
+						</Button>
+					</div>
+				</PanelBody>
+			</Panel>
 		);
 	}
 }

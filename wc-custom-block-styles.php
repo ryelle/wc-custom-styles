@@ -63,6 +63,12 @@ function wc_cbs_render_page() {
 ?>
 <div class="wrap">
 	<h1>Menus</h1>
+	<style>
+	#wc-cbs-colors {
+		margin-top: 30px;
+		max-width: 300px;
+	}
+	</style>
 	<div id="wc-cbs-colors"></div>
 </div>
 <?php
