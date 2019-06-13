@@ -32,10 +32,46 @@ function wc_cbs_rest_api_init() {
 }
 add_action( 'rest_api_init', 'wc_cbs_rest_api_init' );
 
+function wc_cbs_setup_page() {
+	add_submenu_page(
+		'themes.php',
+		__( 'Custom Colors', 'wc-custom-block-styles' ),
+		__( 'Custom Colors', 'wc-custom-block-styles' ),
+		'manage_options',
+		'wc-cbs-colors',
+		'wc_cbs_render_page'
+	);
+
+	// Check screen??
+	wp_enqueue_style( 'wp-components' );
+	wp_enqueue_script(
+		'wc-cbs-colors',
+		plugins_url( 'build/colors.js', __FILE__ ),
+		array( 'wp-components', 'wp-data', 'wp-element', 'lodash' ),
+		WC_CBS_VERSION,
+		true
+	);
+	$colors = get_option( 'wc-cbs-colors', array() );
+
+	wp_localize_script( 'wc-cbs-colors', 'CustomBlockStyle', array(
+		'colors' => $colors,
+	) );
+}
+add_action( 'admin_menu', 'wc_cbs_setup_page' );
+
+function wc_cbs_render_page() {
+?>
+<div class="wrap">
+	<h1>Menus</h1>
+	<div id="wc-cbs-colors"></div>
+</div>
+<?php
+}
+
 /**
  * Enqueue assets.
  */
-function wc_cbs_enqueue_assets() {
+function wc_cbs_enqueue_assets( $screen ) {
 	wp_enqueue_script(
 		'wc-cbs-script',
 		plugins_url( 'build/index.js', __FILE__ ),

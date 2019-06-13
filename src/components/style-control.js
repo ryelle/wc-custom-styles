@@ -10,7 +10,7 @@ import { withDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { getClass } from '../../utils';
+import { getClass } from '../utils';
 
 const StyleControl = ( { onChange, onRemove, style } ) => {
 	const { id, label, block } = style;

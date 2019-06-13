@@ -7,7 +7,6 @@ import { isEqual } from 'lodash';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { dispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post';
 import { registerBlockStyle, unregisterBlockStyle } from '@wordpress/blocks';
@@ -35,17 +34,10 @@ registerPlugin( 'wc-custom-block-styles', { render: () => (
 	</Fragment>
 ) } );
 
-let prevColors = [];
 let prevStyles = [];
 function updateBlockStyles() {
-	const { colors, styles } = store.getState();
-	const activeColors = colors.filter( ( color ) => !! color.slug );
+	const { styles } = store.getState();
 	const activeStyles = styles.filter( ( style ) => !! style.name );
-
-	if ( ! isEqual( prevColors, activeColors ) ) {
-		dispatch( 'core/block-editor' ).updateSettings( { colors: activeColors } );
-		prevColors = activeColors;
-	}
 
 	if ( ! isEqual( prevStyles, activeStyles ) ) {
 		prevStyles.forEach( ( { block, ...style } ) => {

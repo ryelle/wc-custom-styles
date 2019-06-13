@@ -16,8 +16,7 @@ import { withSelect } from '@wordpress/data';
 /**
  * Internal Dependencies
  */
-import { AddStyleControl, StyleControl } from './controls';
-import ColorsPanel from './colors-panel';
+import { AddStyleControl, StyleControl } from '../components';
 
 const Sidebar = ( { styles = [] } ) => {
 	return (
@@ -30,8 +29,6 @@ const Sidebar = ( { styles = [] } ) => {
 					) }
 				</p>
 			</PanelBody>
-
-			<ColorsPanel />
 
 			<PanelBody title={ __( 'Add a new style', 'wc-custom-block-styles' ) }>
 				<p>
