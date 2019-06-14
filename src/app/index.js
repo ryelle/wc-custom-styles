@@ -7,7 +7,8 @@ import { map, sample } from 'lodash';
  * WordPress Dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Button, Panel, PanelBody } from '@wordpress/components';
+import apiFetch from '@wordpress/api-fetch';
+import { Button, Panel, PanelBody, PanelRow } from '@wordpress/components';
 import { Component } from '@wordpress/element';
 
 /**
@@ -26,6 +27,7 @@ class ColorsPanel extends Component {
 		this.onAddClick = this.onAddClick.bind( this );
 		this.onChange = this.onChange.bind( this );
 		this.onDelete = this.onDelete.bind( this );
+		this.onSave = this.onSave.bind( this );
 	}
 
 	onAddClick() {
@@ -53,6 +55,14 @@ class ColorsPanel extends Component {
 		} ) );
 	}
 
+	onSave() {
+		apiFetch( {
+			path: '/wc-cbs/v1/colors',
+			data: this.state.colors,
+			method: 'POST',
+		} );
+	}
+
 	render() {
 		const { colors } = this.state;
 
@@ -70,13 +80,16 @@ class ColorsPanel extends Component {
 							/>
 						);
 					} ) }
-				</PanelBody>
-				<PanelBody initialOpen={ true }>
-					<div className="wc-cbs__button-add">
+					<PanelRow>
 						<Button onClick={ this.onAddClick } isDefault>
 							{ __( 'Add Color', 'wc-custom-block-styles' ) }
 						</Button>
-					</div>
+					</PanelRow>
+				</PanelBody>
+				<PanelBody initialOpen={ true }>
+					<Button onClick={ this.onSave } isDefault>
+						{ __( 'Save Colors', 'wc-custom-block-styles' ) }
+					</Button>
 				</PanelBody>
 			</Panel>
 		);

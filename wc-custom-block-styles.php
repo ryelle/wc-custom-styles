@@ -47,7 +47,7 @@ function wc_cbs_setup_page() {
 	wp_enqueue_script(
 		'wc-cbs-colors',
 		plugins_url( 'build/colors.js', __FILE__ ),
-		array( 'wp-components', 'wp-data', 'wp-element', 'lodash' ),
+		array( 'wp-api-fetch', 'wp-components', 'wp-data', 'wp-element', 'lodash' ),
 		WC_CBS_VERSION,
 		true
 	);
