@@ -41,8 +41,14 @@ function wc_cbs_setup_page() {
 		'wc-cbs-colors',
 		'wc_cbs_render_page'
 	);
+}
+add_action( 'admin_menu', 'wc_cbs_setup_page' );
 
-	// Check screen??
+function wc_cbs_enqueue_scripts( $hook ){
+	if ( 'appearance_page_wc-cbs-colors' !== $hook ) {
+		return;
+	}
+
 	wp_enqueue_style( 'wp-components' );
 	wp_enqueue_script(
 		'wc-cbs-colors',
@@ -57,7 +63,8 @@ function wc_cbs_setup_page() {
 		'colors' => $colors,
 	) );
 }
-add_action( 'admin_menu', 'wc_cbs_setup_page' );
+add_action( 'admin_enqueue_scripts', 'wc_cbs_enqueue_scripts' );
+
 
 function wc_cbs_render_page() {
 ?>
