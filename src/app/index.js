@@ -21,6 +21,7 @@ class ColorsPanel extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
+			isSaving: false,
 			colors: props.colors,
 		};
 
@@ -56,10 +57,13 @@ class ColorsPanel extends Component {
 	}
 
 	onSave() {
+		this.setState( { isSaving: true } );
 		apiFetch( {
 			path: '/wc-cbs/v1/colors',
 			data: this.state.colors,
 			method: 'POST',
+		} ).then( () => {
+			this.setState( { isSaving: false } );
 		} );
 	}
 
@@ -87,7 +91,7 @@ class ColorsPanel extends Component {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody initialOpen={ true }>
-					<Button onClick={ this.onSave } isDefault>
+					<Button onClick={ this.onSave } isDefault disabled={ this.state.isSaving }>
 						{ __( 'Save Colors', 'wc-custom-block-styles' ) }
 					</Button>
 				</PanelBody>
