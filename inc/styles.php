@@ -4,6 +4,7 @@
  *
  * @package WC Custom Block Styles
  */
+
 namespace WordCamp\Custom_Styles\Styles;
 
 defined( 'ABSPATH' ) || die();
@@ -11,7 +12,7 @@ defined( 'ABSPATH' ) || die();
 /**
  * Enqueue assets.
  */
-function enqueue_assets( $screen ) {
+function enqueue_assets() {
 	wp_enqueue_script(
 		'wc-cbs-script',
 		plugins_url( 'build/index.js', dirname( __FILE__ ) ),
@@ -21,11 +22,13 @@ function enqueue_assets( $screen ) {
 	);
 
 	$styles = get_option( 'wc-cbs-styles', array() );
-	$colors = get_option( 'wc-cbs-colors', array() );
 
-	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', array(
-		'styles' => $styles,
-		'colors' => $colors,
-	) );
+	wp_localize_script(
+		'wc-cbs-script',
+		'CustomBlockStyle',
+		array(
+			'styles' => $styles,
+		)
+	);
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_assets' );

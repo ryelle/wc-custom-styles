@@ -34,18 +34,19 @@ class WC_CBS_Colors_Controller extends WC_CBS_Option_Controller {
 	/**
 	 * Get the settings schema, conforming to JSON Schema
 	 *
+	 * @param array $schema General JSON schema for the response.
 	 * @return array
 	 */
 	public function add_additional_fields_schema( $schema ) {
 		$schema['items']['properties'] = array(
-			'name' => array(
+			'name'  => array(
 				'type'        => 'string',
 				'description' => __( 'The human-readable name for this color.', 'wc-custom-block-styles' ),
 				'arg_options' => array(
 					'required' => true,
 				),
 			),
-			'slug' => array(
+			'slug'  => array(
 				'type'        => 'string',
 				'description' => __( 'The slug-ified name, used in css classes.', 'wc-custom-block-styles' ),
 				'arg_options' => array(

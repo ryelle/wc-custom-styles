@@ -42,21 +42,25 @@ abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 	 * Registers the routes for the objects of the controller.
 	 */
 	public function register_routes() {
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			// Here we register the readable endpoint for collections.
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base,
 			array(
-				'methods'   => WP_REST_Server::READABLE,
-				'callback'  => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-			),
-			array(
-				'methods'   => WP_REST_Server::EDITABLE,
-				'callback'  => array( $this, 'update_item' ),
-				'permission_callback' => array( $this, 'update_item_permissions_check' ),
-			),
-			// Register our schema callback.
-			'schema' => array( $this, 'get_item_schema' ),
-		) );
+				// Here we register the readable endpoint for collections.
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				),
+				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_item' ),
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
+				),
+				// Register our schema callback.
+				'schema' => array( $this, 'get_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -99,7 +103,7 @@ abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 	 */
 	public function update_item( $request ) {
 		$current_settings = get_option( $this->setting, array() );
-		$settings = $this->prepare_item_for_database( $request );
+		$settings         = $this->prepare_item_for_database( $request );
 
 		if ( is_wp_error( $settings ) ) {
 			return rest_ensure_response( $settings );
@@ -140,12 +144,12 @@ abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 	protected function prepare_item_for_database( $request ) {
 		$body = $request->get_body();
 		if ( ! $body ) {
-			return new WP_Error( 'rest_no_data', __( 'No data was submitted.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_no_data', __( 'No data was submitted.', 'wc-custom-block-styles' ), array( 'status' => 400 ) );
 		}
 
 		$raw_settings = json_decode( $body );
 		if ( ! is_array( $raw_settings ) ) {
-			return new WP_Error( 'rest_invalid_json', __( 'The data submitted was malformed.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_invalid_json', __( 'The data submitted was malformed.', 'wc-custom-block-styles' ), array( 'status' => 400 ) );
 		}
 
 		return rest_sanitize_value_from_schema( $raw_settings, $this->get_item_schema() );

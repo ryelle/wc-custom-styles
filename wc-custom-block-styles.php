@@ -9,6 +9,7 @@
  *
  * @package WC Custom Block Styles
  */
+
 namespace WordCamp\Custom_Styles;
 
 defined( 'ABSPATH' ) || die();

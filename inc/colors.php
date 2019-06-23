@@ -4,6 +4,7 @@
  *
  * @package WC Custom Block Styles
  */
+
 namespace WordCamp\Custom_Styles\Colors;
 
 defined( 'ABSPATH' ) || die();
@@ -30,7 +31,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\setup_page' );
  *
  * @param string $hook The current admin page.
  */
-function enqueue_scripts( $hook ){
+function enqueue_scripts( $hook ) {
 	if ( 'appearance_page_wc-cbs-colors' !== $hook ) {
 		return;
 	}
@@ -51,10 +52,14 @@ function enqueue_scripts( $hook ){
 
 	$original_colors = current( (array) get_theme_support( 'editor-color-palette' ) );
 	$colors          = get_option( 'wc-cbs-colors', $original_colors );
-	wp_localize_script( 'wc-cbs-colors', 'CustomBlockStyle', array(
-		'colors'         => $colors,
-		'originalColors' => $original_colors,
-	) );
+	wp_localize_script(
+		'wc-cbs-colors',
+		'CustomBlockStyle',
+		array(
+			'colors'         => $colors,
+			'originalColors' => $original_colors,
+		)
+	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_scripts' );
 

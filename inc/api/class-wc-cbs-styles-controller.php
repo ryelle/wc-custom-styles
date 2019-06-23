@@ -34,11 +34,12 @@ class WC_CBS_Styles_Controller extends WC_CBS_Option_Controller {
 	/**
 	 * Get the settings schema, conforming to JSON Schema
 	 *
+	 * @param array $schema General JSON schema for the response.
 	 * @return array
 	 */
-	 public function add_additional_fields_schema( $schema ) {
- 		$schema['items']['properties'] = array(
-			'id' => array(
+	public function add_additional_fields_schema( $schema ) {
+		$schema['items']['properties'] = array(
+			'id'    => array(
 				'type'        => 'integer',
 				'description' => __( 'A numeric ID unique to the style.', 'wc-custom-block-styles' ),
 				'arg_options' => array(
@@ -52,7 +53,7 @@ class WC_CBS_Styles_Controller extends WC_CBS_Option_Controller {
 					'required' => true,
 				),
 			),
-			'name' => array(
+			'name'  => array(
 				'type'        => 'string',
 				'description' => __( 'The CSS class added to the block.', 'wc-custom-block-styles' ),
 				'arg_options' => array(
