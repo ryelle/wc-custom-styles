@@ -49,7 +49,12 @@ function wc_cbs_enqueue_scripts( $hook ){
 		return;
 	}
 
-	wp_enqueue_style( 'wp-components' );
+	wp_enqueue_style(
+		'wc-cbs-colors',
+		plugins_url( 'src/style.css', __FILE__ ),
+		array( 'wp-components' ),
+		WC_CBS_VERSION
+	);
 	wp_enqueue_script(
 		'wc-cbs-colors',
 		plugins_url( 'build/colors.js', __FILE__ ),

@@ -1,0 +1,15 @@
+#wc-cbs-colors {
+	margin-top: 30px;
+}
+
+#wc-cbs-colors .components-panel {
+	max-width: 400px;
+}
+
+.wc-cbs-color-control__button {
+	width: 32px;
+	height: 32px;
+	background-color: currentColor;
+	border: 1px solid rgba( 0, 0, 0, 0.2 );
+	border-radius: 50%;
+}

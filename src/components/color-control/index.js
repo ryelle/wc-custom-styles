@@ -12,7 +12,7 @@ import { IconButton, PanelRow, TextControl } from '@wordpress/components';
 /**
  * Internal Dependencies
  */
-import ColorPickerButton from './color-picker-button';
+import ColorButton from './button';
 
 const ColorControl = ( {
 	color,
@@ -21,7 +21,7 @@ const ColorControl = ( {
 	onDelete,
 } ) => (
 	<PanelRow>
-		<ColorPickerButton color={ color } onChangeColor={ onChange } />
+		<ColorButton color={ color } onChangeColor={ onChange } />
 		<div style={ { paddingLeft: '8px' } }>
 			<TextControl
 				label={ __( 'Color Name', 'wc-custom-block-styles' ) }
