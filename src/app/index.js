@@ -73,8 +73,7 @@ class ColorsPanel extends Component {
 		this.setState( { isSaving: true } );
 		apiFetch( {
 			path: '/wc-cbs/v1/colors',
-			data: originalColors || [],
-			method: 'POST',
+			method: 'DELETE',
 		} ).then( () => {
 			this.setState( { isSaving: false, colors: originalColors } );
 		} );

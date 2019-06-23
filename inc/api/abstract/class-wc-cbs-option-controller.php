@@ -57,6 +57,11 @@ abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 					'callback'            => array( $this, 'update_item' ),
 					'permission_callback' => array( $this, 'update_item_permissions_check' ),
 				),
+				array(
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => array( $this, 'delete_item' ),
+					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+				),
 				// Register our schema callback.
 				'schema' => array( $this, 'get_item_schema' ),
 			)
@@ -80,6 +85,16 @@ abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 	 * @return WP_Error|bool True if the request has access to update the item, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'edit_posts' );
+	}
+
+	/**
+	 * Checks if a given request has access to delete the settings.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|bool True if the request has access to delete the item, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'edit_posts' );
 	}
 
@@ -122,6 +137,31 @@ abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 		}
 
 		return rest_ensure_response( $settings );
+	}
+
+	/**
+	 * Delete the settings.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
+	 */
+	public function delete_item( $request ) {
+		$current_settings = get_option( $this->setting );
+		// If this setting doesn't exist, it is functionally deleted already.
+		if ( false === $current_settings ) {
+			return rest_ensure_response( array( 'deleted' => true ) );
+		}
+
+		$result = delete_option( $this->setting );
+		if ( ! $result ) {
+			return new WP_Error(
+				'rest_invalid_option',
+				sprintf( __( 'Unable to delete settings.', 'wc-custom-block-styles' ) ),
+				array( 'status' => 500 )
+			);
+		}
+
+		return rest_ensure_response( array( 'deleted' => true ) );
 	}
 
 	/**
