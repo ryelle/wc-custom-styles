@@ -57,10 +57,12 @@ function wc_cbs_enqueue_scripts( $hook ){
 		WC_CBS_VERSION,
 		true
 	);
-	$colors = get_option( 'wc-cbs-colors', array() );
 
+	$original_colors = current( (array) get_theme_support( 'editor-color-palette' ) );
+	$colors          = get_option( 'wc-cbs-colors', $original_colors );
 	wp_localize_script( 'wc-cbs-colors', 'CustomBlockStyle', array(
-		'colors' => $colors,
+		'colors'         => $colors,
+		'originalColors' => $original_colors,
 	) );
 }
 add_action( 'admin_enqueue_scripts', 'wc_cbs_enqueue_scripts' );

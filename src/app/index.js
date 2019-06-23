@@ -8,7 +8,7 @@ import { map, sample } from 'lodash';
  */
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Button, Panel, PanelBody, PanelRow } from '@wordpress/components';
+import { Button, ButtonGroup, Panel, PanelBody, PanelRow } from '@wordpress/components';
 import { Component } from '@wordpress/element';
 
 /**
@@ -29,6 +29,7 @@ class ColorsPanel extends Component {
 		this.onChange = this.onChange.bind( this );
 		this.onDelete = this.onDelete.bind( this );
 		this.onSave = this.onSave.bind( this );
+		this.onReset = this.onReset.bind( this );
 	}
 
 	onAddClick() {
@@ -67,6 +68,18 @@ class ColorsPanel extends Component {
 		} );
 	}
 
+	onReset() {
+		const { originalColors } = CustomBlockStyle;
+		this.setState( { isSaving: true } );
+		apiFetch( {
+			path: '/wc-cbs/v1/colors',
+			data: originalColors,
+			method: 'POST',
+		} ).then( () => {
+			this.setState( { isSaving: false, colors: originalColors } );
+		} );
+	}
+
 	render() {
 		const { colors } = this.state;
 
@@ -91,9 +104,14 @@ class ColorsPanel extends Component {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody initialOpen={ true }>
-					<Button onClick={ this.onSave } isDefault disabled={ this.state.isSaving }>
-						{ __( 'Save Colors', 'wc-custom-block-styles' ) }
-					</Button>
+					<ButtonGroup>
+						<Button onClick={ this.onSave } isPrimary isBusy={ this.state.isSaving }>
+							{ __( 'Save Colors', 'wc-custom-block-styles' ) }
+						</Button>
+						<Button onClick={ this.onReset } isDefault isDestructive isBusy={ this.state.isSaving }>
+							{ __( 'Reset Colors', 'wc-custom-block-styles' ) }
+						</Button>
+					</ButtonGroup>
 				</PanelBody>
 			</Panel>
 		);
