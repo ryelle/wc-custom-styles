@@ -24,6 +24,8 @@ This feature lets editors customize the color palette used for background/text/e
 
 Once you save your colors, they'll be available in the Color Settings on any block that supports colors. Check it out on the Group block, Paragraph block, the overlay on the Cover block, etc.
 
+![](https://ryelle.codes/wp-content/uploads/2019/06/wccbs-custom-colors.png)
+
 ## Custom Block Styles
 
 This feature is more advanced/less polished. It lets editors create ["block styles"]() without having to write JavaScript. Block styles are simple variations on a block made with CSS. They work by adding a className to the block's wrapper. You can create new styles by selecting the block type, and entering in a name for it. The class name will be generated for you, and you can use that in your theme. The newly created style will be available for you immediately, no need to reload the page.
@@ -31,3 +33,6 @@ This feature is more advanced/less polished. It lets editors create ["block styl
 Rough edges:
 - This doesn't add any style, just the class name. It assumes you've added the class to your theme.
 - You can't preview the style in the editor, unless you've added a theme stylesheet to the editor (currently not possible on WordCamp sites).
+
+![](https://ryelle.codes/wp-content/uploads/2019/06/wccbs-block-style-sidebar.png)
+![](https://ryelle.codes/wp-content/uploads/2019/06/wccbs-block-style-inspector.png)
