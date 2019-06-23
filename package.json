@@ -2,26 +2,15 @@
   "name": "wc-custom-block-styles",
   "version": "1.0.0",
   "description": "",
-  "main": "build/index.js",
-  "scripts": {
-    "build": "wp-scripts build index=./src/index.js colors=./src/colors.js",
-    "check-engines": "wp-scripts check-engines",
-    "check-licenses": "wp-scripts check-licenses --production",
-    "lint:css": "wp-scripts lint-style '**/*.css'",
-    "lint:js": "wp-scripts lint-js src",
-    "lint:php": "composer run phpcs .",
-    "lint:pkg-json": "wp-scripts lint-pkg-json .",
-    "start": "wp-scripts start index=./src/index.js colors=./src/colors.js",
-    "test:unit": "wp-scripts test-unit-js"
-  },
   "author": "Kelly Dwan",
   "license": "GPL-2.0-or-later",
-  "devDependencies": {
-    "@wordpress/eslint-plugin": "2.1.0",
-    "@wordpress/scripts": "3.1.0",
-    "redux-multi": "0.1.12",
-    "refx": "3.1.1"
-  },
+  "private": true,
+  "keywords": [
+    "WordPress"
+  ],
+  "homepage": "",
+  "repository": "",
+  "bugs": "",
   "engines": {
     "node": "10.15.3",
     "npm": "6.9.0"
@@ -31,6 +20,24 @@
     "build/**",
     "wc-custom-block-styles.php"
   ],
+  "main": "build/index.js",
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "2.1.0",
+    "@wordpress/scripts": "3.1.0",
+    "redux-multi": "0.1.12",
+    "refx": "3.1.1"
+  },
+  "scripts": {
+    "build": "wp-scripts build index=./src/index.js colors=./src/colors.js",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses --production",
+    "lint:css": "wp-scripts lint-style 'src/**/*.css'",
+    "lint:js": "wp-scripts lint-js src",
+    "lint:php": "composer run phpcs .",
+    "lint:pkg-json": "wp-scripts lint-pkg-json .",
+    "start": "wp-scripts start index=./src/index.js colors=./src/colors.js",
+    "test:unit": "wp-scripts test-unit-js"
+  },
   "eslintConfig": {
     "globals": {
       "CustomBlockStyle": "readonly"
