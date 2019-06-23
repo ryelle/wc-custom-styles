@@ -50,8 +50,72 @@ function enqueue_scripts( $hook ) {
 		true
 	);
 
+	// Default Gutenberg colors (if a theme does not set its own, these are used).
+	// phpcs:disable WordPress.WP.I18n.MissingArgDomain
+	$gutenberg_colors = array(
+		array(
+			'name'  => __( 'Pale pink' ),
+			'slug'  => 'pale-pink',
+			'color' => '#f78da7',
+		),
+		array(
+			'name'  => __( 'Vivid red' ),
+			'slug'  => 'vivid-red',
+			'color' => '#cf2e2e',
+		),
+		array(
+			'name'  => __( 'Luminous vivid orange' ),
+			'slug'  => 'luminous-vivid-orange',
+			'color' => '#ff6900',
+		),
+		array(
+			'name'  => __( 'Luminous vivid amber' ),
+			'slug'  => 'luminous-vivid-amber',
+			'color' => '#fcb900',
+		),
+		array(
+			'name'  => __( 'Light green cyan' ),
+			'slug'  => 'light-green-cyan',
+			'color' => '#7bdcb5',
+		),
+		array(
+			'name'  => __( 'Vivid green cyan' ),
+			'slug'  => 'vivid-green-cyan',
+			'color' => '#00d084',
+		),
+		array(
+			'name'  => __( 'Pale cyan blue' ),
+			'slug'  => 'pale-cyan-blue',
+			'color' => '#8ed1fc',
+		),
+		array(
+			'name'  => __( 'Vivid cyan blue' ),
+			'slug'  => 'vivid-cyan-blue',
+			'color' => '#0693e3',
+		),
+		array(
+			'name'  => __( 'Very light gray' ),
+			'slug'  => 'very-light-gray',
+			'color' => '#eeeeee',
+		),
+		array(
+			'name'  => __( 'Cyan bluish gray' ),
+			'slug'  => 'cyan-bluish-gray',
+			'color' => '#abb8c3',
+		),
+		array(
+			'name'  => __( 'Very dark gray' ),
+			'slug'  => 'very-dark-gray',
+			'color' => '#313131',
+		),
+	);
+	// phpcs:enable
+
 	$original_colors = current( (array) get_theme_support( 'editor-color-palette' ) );
-	$colors          = get_option( 'wc-cbs-colors', $original_colors );
+	if ( ! $original_colors ) {
+		$original_colors = $gutenberg_colors;
+	}
+	$colors = get_option( 'wc-cbs-colors', $original_colors );
 	wp_localize_script(
 		'wc-cbs-colors',
 		'CustomBlockStyle',
