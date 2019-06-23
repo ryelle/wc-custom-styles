@@ -10,34 +10,29 @@
  * @package WC Custom Block Styles
  */
 
+namespace WordCamp\Custom_Styles;
+
 defined( 'ABSPATH' ) || die();
 define( 'WC_CBS_VERSION', '1.0.0' );
+
+require_once dirname( __FILE__ ) . '/inc/colors.php';
+require_once dirname( __FILE__ ) . '/inc/styles.php';
 
 /**
  * Intialize REST API endpoint.
  */
-function wc_cbs_rest_api_init() {
-	require_once dirname( __FILE__ ) . '/api/class-wc-cbs-styles-controller.php';
+function rest_api_init() {
+	require_once dirname( __FILE__ ) . '/inc/api/abstract/class-wc-cbs-option-controller.php';
+	require_once dirname( __FILE__ ) . '/inc/api/class-wc-cbs-styles-controller.php';
+	require_once dirname( __FILE__ ) . '/inc/api/class-wc-cbs-colors-controller.php';
 
-	$controller = new WC_CBS_Styles_Controller();
-	$controller->register_routes();
-}
-add_action( 'rest_api_init', 'wc_cbs_rest_api_init' );
-
-/**
- * Enqueue assets.
- */
-function wc_cbs_enqueue_assets() {
-	wp_enqueue_script(
-		'wc-cbs-script',
-		plugins_url( 'build/index.js', __FILE__ ),
-		array( 'wp-components', 'wp-blocks', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-plugins', 'lodash' ),
-		WC_CBS_VERSION,
-		true
+	$controllers = array(
+		new \WC_CBS_Styles_Controller(),
+		new \WC_CBS_Colors_Controller(),
 	);
 
-	$settings = get_option( 'wc-cbs-styles', array() );
-
-	wp_localize_script( 'wc-cbs-script', 'CustomBlockStyle', $settings );
+	foreach ( $controllers as $controller ) {
+		$controller->register_routes();
+	}
 }
-add_action( 'enqueue_block_editor_assets', 'wc_cbs_enqueue_assets' );
+add_action( 'rest_api_init', __NAMESPACE__ . '\rest_api_init' );

@@ -1,4 +1,9 @@
 /*
+ * External dependencies
+ */
+import { isEqual } from 'lodash';
+
+/*
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -31,18 +36,20 @@ registerPlugin( 'wc-custom-block-styles', { render: () => (
 
 let prevStyles = [];
 function updateBlockStyles() {
-	const styles = store.getState();
+	const { styles } = store.getState();
 	const activeStyles = styles.filter( ( style ) => !! style.name );
 
-	prevStyles.forEach( ( { block, ...style } ) => {
-		unregisterBlockStyle( block, style.name );
-	} );
+	if ( ! isEqual( prevStyles, activeStyles ) ) {
+		prevStyles.forEach( ( { block, ...style } ) => {
+			unregisterBlockStyle( block, style.name );
+		} );
 
-	activeStyles.forEach( ( { block, ...style } ) => {
-		registerBlockStyle( block, style );
-	} );
+		activeStyles.forEach( ( { block, ...style } ) => {
+			registerBlockStyle( block, style );
+		} );
 
-	prevStyles = activeStyles;
+		prevStyles = activeStyles;
+	}
 }
 
 updateBlockStyles();

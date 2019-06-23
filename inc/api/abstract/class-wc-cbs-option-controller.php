@@ -1,8 +1,8 @@
 <?php
 /**
- * REST API Style Settings Controller
+ * REST API Option Controller
  *
- * Handles requests to /wc-cbs/v1/styles
+ * Abstract class which handles saving items to options.
  *
  * @package WC Custom Block Styles
  */
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * @package WC Custom Block Styles
  * @extends WP_REST_Controller
  */
-class WC_CBS_Styles_Controller extends WP_REST_Controller {
+abstract class WC_CBS_Option_Controller extends WP_REST_Controller {
 
 	/**
 	 * Endpoint namespace.
@@ -29,27 +29,43 @@ class WC_CBS_Styles_Controller extends WP_REST_Controller {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = 'styles';
+	protected $rest_base = '';
+
+	/**
+	 * Option name.
+	 *
+	 * @var string
+	 */
+	protected $setting = '';
 
 	/**
 	 * Registers the routes for the objects of the controller.
 	 */
 	public function register_routes() {
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			// Here we register the readable endpoint for collections.
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base,
 			array(
-				'methods'   => WP_REST_Server::READABLE,
-				'callback'  => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-			),
-			array(
-				'methods'   => WP_REST_Server::EDITABLE,
-				'callback'  => array( $this, 'update_item' ),
-				'permission_callback' => array( $this, 'update_item_permissions_check' ),
-			),
-			// Register our schema callback.
-			'schema' => array( $this, 'get_item_schema' ),
-		) );
+				// Here we register the readable endpoint for collections.
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				),
+				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_item' ),
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
+				),
+				array(
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => array( $this, 'delete_item' ),
+					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+				),
+				// Register our schema callback.
+				'schema' => array( $this, 'get_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -73,13 +89,23 @@ class WC_CBS_Styles_Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Checks if a given request has access to delete the settings.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|bool True if the request has access to delete the item, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return current_user_can( 'edit_posts' );
+	}
+
+	/**
 	 * Retrieves a collection of items.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		$settings = get_option( 'wc-cbs-styles', array() );
+		$settings = get_option( $this->setting, array() );
 		$response = $this->prepare_item_for_response( $settings, $request );
 		return rest_ensure_response( $response );
 	}
@@ -91,15 +117,15 @@ class WC_CBS_Styles_Controller extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
-		$current_settings = get_option( 'wc-cbs-styles', array() );
-		$settings = $this->prepare_item_for_database( $request );
+		$current_settings = get_option( $this->setting, array() );
+		$settings         = $this->prepare_item_for_database( $request );
 
 		if ( is_wp_error( $settings ) ) {
 			return rest_ensure_response( $settings );
 		}
 
 		if ( $current_settings !== $settings ) {
-			$result = update_option( 'wc-cbs-styles', $settings, false );
+			$result = update_option( $this->setting, $settings, false );
 
 			if ( ! $result ) {
 				return new WP_Error(
@@ -111,6 +137,31 @@ class WC_CBS_Styles_Controller extends WP_REST_Controller {
 		}
 
 		return rest_ensure_response( $settings );
+	}
+
+	/**
+	 * Delete the settings.
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
+	 */
+	public function delete_item( $request ) {
+		$current_settings = get_option( $this->setting );
+		// If this setting doesn't exist, it is functionally deleted already.
+		if ( false === $current_settings ) {
+			return rest_ensure_response( array( 'deleted' => true ) );
+		}
+
+		$result = delete_option( $this->setting );
+		if ( ! $result ) {
+			return new WP_Error(
+				'rest_invalid_option',
+				sprintf( __( 'Unable to delete settings.', 'wc-custom-block-styles' ) ),
+				array( 'status' => 500 )
+			);
+		}
+
+		return rest_ensure_response( array( 'deleted' => true ) );
 	}
 
 	/**
@@ -133,12 +184,12 @@ class WC_CBS_Styles_Controller extends WP_REST_Controller {
 	protected function prepare_item_for_database( $request ) {
 		$body = $request->get_body();
 		if ( ! $body ) {
-			return new WP_Error( 'rest_no_data', __( 'No data was submitted.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_no_data', __( 'No data was submitted.', 'wc-custom-block-styles' ), array( 'status' => 400 ) );
 		}
 
 		$raw_settings = json_decode( $body );
 		if ( ! is_array( $raw_settings ) ) {
-			return new WP_Error( 'rest_invalid_json', __( 'The data submitted was malformed.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_invalid_json', __( 'The data submitted was malformed.', 'wc-custom-block-styles' ), array( 'status' => 400 ) );
 		}
 
 		return rest_sanitize_value_from_schema( $raw_settings, $this->get_item_schema() );
@@ -157,36 +208,7 @@ class WC_CBS_Styles_Controller extends WP_REST_Controller {
 			'items'   => array(
 				'type'       => 'object',
 				'context'    => array( 'view' ),
-				'properties' => array(
-					'id' => array(
-						'type'        => 'integer',
-						'description' => __( 'A numeric ID unique to the style.', 'wc-custom-block-styles' ),
-						'arg_options' => array(
-							'required' => true,
-						),
-					),
-					'label' => array(
-						'type'        => 'string',
-						'description' => __( 'The human-readable name for this style.', 'wc-custom-block-styles' ),
-						'arg_options' => array(
-							'required' => true,
-						),
-					),
-					'name' => array(
-						'type'        => 'string',
-						'description' => __( 'The CSS class added to the block.', 'wc-custom-block-styles' ),
-						'arg_options' => array(
-							'required' => true,
-						),
-					),
-					'block' => array(
-						'type'        => 'string',
-						'description' => __( 'The block name which should use this style.', 'wc-custom-block-styles' ),
-						'arg_options' => array(
-							'required' => true,
-						),
-					),
-				),
+				'properties' => array(),
 			),
 		);
 		return $this->add_additional_fields_schema( $schema );

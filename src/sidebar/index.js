@@ -7,16 +7,16 @@ import { map } from 'lodash';
  * WordPress Dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { PanelBody } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { Fragment } from '@wordpress/element';
 import { getBlockType } from '@wordpress/blocks';
+import { PanelBody } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 
 /**
  * Internal Dependencies
  */
-import { AddStyleControl, StyleControl } from './controls';
+import { AddStyleControl, StyleControl } from '../components';
 
 const Sidebar = ( { styles = [] } ) => {
 	return (

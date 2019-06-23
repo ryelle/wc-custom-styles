@@ -7,18 +7,18 @@ export default {
 		};
 	},
 
+	deleteStyle( id ) {
+		return {
+			type: 'DELETE_STYLE',
+			id,
+		};
+	},
+
 	updateStyle( id, style ) {
 		return {
 			type: 'UPDATE_STYLE',
 			id,
 			style,
-		};
-	},
-
-	deleteStyle( id ) {
-		return {
-			type: 'DELETE_STYLE',
-			id,
 		};
 	},
 };
