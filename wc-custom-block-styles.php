@@ -39,7 +39,9 @@ function wc_cbs_setup_page() {
 		__( 'Custom Colors', 'wc-custom-block-styles' ),
 		'manage_options',
 		'wc-cbs-colors',
-		'wc_cbs_render_page'
+		function() {
+			echo '<div id="wc-cbs-colors"></div>';
+		}
 	);
 }
 add_action( 'admin_menu', 'wc_cbs_setup_page' );
@@ -71,22 +73,6 @@ function wc_cbs_enqueue_scripts( $hook ){
 	) );
 }
 add_action( 'admin_enqueue_scripts', 'wc_cbs_enqueue_scripts' );
-
-
-function wc_cbs_render_page() {
-?>
-<div class="wrap">
-	<h1>Menus</h1>
-	<style>
-	#wc-cbs-colors {
-		margin-top: 30px;
-		max-width: 300px;
-	}
-	</style>
-	<div id="wc-cbs-colors"></div>
-</div>
-<?php
-}
 
 /**
  * Enqueue assets.
