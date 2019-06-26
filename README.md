@@ -24,7 +24,7 @@ This feature lets editors customize the color palette used for background/text/e
 
 Once you save your colors, they'll be available in the Color Settings on any block that supports colors. Check it out on the Group block, Paragraph block, the overlay on the Cover block, etc.
 
-<img src="https://i0.wp.com/ryelle.codes/wp-content/uploads/2019/06/wccbs-custom-colors.png?w=800&ssl=1" style="width:400px;height:auto;" alt="" />
+<img src="https://i0.wp.com/ryelle.codes/wp-content/uploads/2019/06/wccbs-custom-colors.png?w=800&ssl=1&zoom=2" alt="" />
 
 *Custom colors screen*
 
@@ -36,10 +36,10 @@ Rough edges:
 - This doesn't add any style, just the class name. It assumes you've added the class to your theme.
 - You can't preview the style in the editor, unless you've added a theme stylesheet to the editor (currently not possible on WordCamp sites).
 
-<img src="https://i0.wp.com/ryelle.codes/wp-content/uploads/2019/06/wccbs-block-style-sidebar.png?w=800&ssl=1" style="width:400px;height:auto;" alt="" />
+<img src="https://i0.wp.com/ryelle.codes/wp-content/uploads/2019/06/wccbs-block-style-sidebar.png?w=800&ssl=1&zoom=2" alt="" />
 
 *Custom Block Styles sidebar*
 
-<img src="https://i0.wp.com/ryelle.codes/wp-content/uploads/2019/06/wccbs-block-style-inspector.png?w=800&ssl=1" style="width:400px;height:auto;" alt="" />
+<img src="https://i0.wp.com/ryelle.codes/wp-content/uploads/2019/06/wccbs-block-style-inspector.png?w=800&ssl=1&zoom=2" alt="" />
 
 *Block style variations in the style switcher*
