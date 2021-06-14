@@ -22,8 +22,8 @@
   ],
   "main": "build/index.js",
   "devDependencies": {
-    "@wordpress/eslint-plugin": "2.3.0",
-    "@wordpress/scripts": "3.3.0",
+    "@wordpress/eslint-plugin": "9.0.6",
+    "@wordpress/scripts": "16.1.2",
     "redux-multi": "0.1.12",
     "refx": "3.1.1"
   },
