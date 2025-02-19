@@ -12,7 +12,7 @@
   "repository": "",
   "bugs": "",
   "engines": {
-    "node": "10.16.1",
+    "node": "10.24.1",
     "npm": "6.10.2"
   },
   "files": [
